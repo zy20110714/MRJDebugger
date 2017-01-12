@@ -13,9 +13,20 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    paintarea.cpp \
+    showitem.cpp \
+    showqueue.cpp \
+    node.cpp \
+    mainwindow_OscilloScope.cpp \
+    mainwindow_PID.cpp \
+    mainwindow_Set.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    paintarea.h \
+    showitem.h \
+    showqueue.h \
+    node.h
 
 FORMS    += mainwindow.ui
 

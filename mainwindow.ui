@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1133</width>
+    <width>1135</width>
     <height>700</height>
    </rect>
   </property>
@@ -31,7 +31,7 @@
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QWidget" name="widget_2" native="true">
+      <widget class="QWidget" name="TestRun" native="true">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
@@ -43,7 +43,7 @@
          <rect>
           <x>10</x>
           <y>10</y>
-          <width>161</width>
+          <width>163</width>
           <height>171</height>
          </rect>
         </property>
@@ -111,7 +111,7 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QComboBox" name="comboBox_4">
+          <widget class="QComboBox" name="waveModeCombo">
            <item>
             <property name="text">
              <string>MANUAL</string>
@@ -135,16 +135,16 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QLineEdit" name="lineEdit_3">
+          <widget class="QLineEdit" name="frequencyLineEdit">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
           </widget>
          </item>
          <item row="3" column="1">
-          <widget class="QLineEdit" name="lineEdit_4">
+          <widget class="QLineEdit" name="AmplitudeLineEdit">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -160,10 +160,10 @@
             <number>1</number>
            </property>
            <property name="minimum">
-            <double>-9999.000000000000000</double>
+            <double>-99999.000000000000000</double>
            </property>
            <property name="maximum">
-            <double>9999.000000000000000</double>
+            <double>99999.000000000000000</double>
            </property>
            <property name="singleStep">
             <double>0.100000000000000</double>
@@ -176,7 +176,7 @@
         <property name="geometry">
          <rect>
           <x>180</x>
-          <y>140</y>
+          <y>150</y>
           <width>281</width>
           <height>31</height>
          </rect>
@@ -220,39 +220,254 @@
          </item>
         </layout>
        </widget>
+       <widget class="QPushButton" name="confirmButton">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>110</y>
+          <width>99</width>
+          <height>27</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>OK</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="stopButton">
+        <property name="geometry">
+         <rect>
+          <x>330</x>
+          <y>110</y>
+          <width>99</width>
+          <height>27</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Stop</string>
+        </property>
+       </widget>
       </widget>
      </item>
      <item>
-      <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="1">
-        <widget class="QTabWidget" name="PID">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>8</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
+      <layout class="QGridLayout" name="gridLayout_3"/>
+     </item>
+     <item>
+      <widget class="QTabWidget" name="PID">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>8</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="POS">
+        <attribute name="title">
+         <string>POS</string>
+        </attribute>
+        <widget class="QWidget" name="gridLayoutWidget_3">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>122</width>
+           <height>128</height>
+          </rect>
          </property>
-         <property name="currentIndex">
-          <number>2</number>
-         </property>
-         <widget class="QWidget" name="POS">
-          <attribute name="title">
-           <string>POS</string>
-          </attribute>
-         </widget>
-         <widget class="QWidget" name="SPD">
-          <attribute name="title">
-           <string>SPD</string>
-          </attribute>
-         </widget>
-         <widget class="QWidget" name="CUR">
-          <attribute name="title">
-           <string>CUR</string>
-          </attribute>
-         </widget>
+         <layout class="QGridLayout" name="gridLayout_8">
+          <item row="0" column="1">
+           <widget class="QSpinBox" name="POS_PSpinBox">
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QSpinBox" name="POS_DSpinBox">
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>P:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_8">
+            <property name="text">
+             <string>D:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QSpinBox" name="POS_ISpinBox">
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>I:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_20">
+            <property name="text">
+             <string>Dead:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QSpinBox" name="POS_DSSpinBox">
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
-       </item>
-      </layout>
+       </widget>
+       <widget class="QWidget" name="SPD">
+        <attribute name="title">
+         <string>SPD</string>
+        </attribute>
+        <widget class="QWidget" name="gridLayoutWidget_4">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>122</width>
+           <height>128</height>
+          </rect>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_9">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_14">
+            <property name="text">
+             <string>P:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_15">
+            <property name="text">
+             <string>D:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_16">
+            <property name="text">
+             <string>I:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QSpinBox" name="SPD_PSpinBox">
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QSpinBox" name="SPD_ISpinBox">
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QSpinBox" name="SPD_DSpinBox">
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_21">
+            <property name="text">
+             <string>Dead:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QSpinBox" name="SPD_DSSpinBox">
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="CUR">
+        <attribute name="title">
+         <string>CUR</string>
+        </attribute>
+        <widget class="QWidget" name="gridLayoutWidget_5">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>121</width>
+           <height>95</height>
+          </rect>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_10">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_17">
+            <property name="text">
+             <string>P:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_18">
+            <property name="text">
+             <string>D:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_19">
+            <property name="text">
+             <string>I:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QSpinBox" name="CUR_PSpinBox">
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QSpinBox" name="CUR_ISpinBox">
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QSpinBox" name="CUR_DSpinBox">
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </widget>
      </item>
      <item>
       <widget class="QTabWidget" name="Monitor">
@@ -263,11 +478,11 @@
         <attribute name="title">
          <string>SET</string>
         </attribute>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="setZeroPushButton">
          <property name="geometry">
           <rect>
            <x>50</x>
-           <y>0</y>
+           <y>30</y>
            <width>99</width>
            <height>27</height>
           </rect>
@@ -276,11 +491,11 @@
           <string>ZERO</string>
          </property>
         </widget>
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="IDPushButton">
          <property name="geometry">
           <rect>
            <x>50</x>
-           <y>30</y>
+           <y>0</y>
            <width>99</width>
            <height>27</height>
           </rect>
@@ -292,7 +507,7 @@
           <string>ID</string>
          </property>
         </widget>
-        <widget class="QPushButton" name="btnENonP">
+        <widget class="QPushButton" name="ENonPPushButton">
          <property name="geometry">
           <rect>
            <x>50</x>
@@ -317,17 +532,7 @@
           <string>ENonP</string>
          </property>
         </widget>
-        <widget class="QLineEdit" name="lineEdit">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>30</y>
-           <width>41</width>
-           <height>27</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="lineEdit_2">
+        <widget class="QLineEdit" name="IDLineEdit">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -347,27 +552,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="widget" native="true">
-    <property name="geometry">
-     <rect>
-      <x>29</x>
-      <y>29</y>
-      <width>611</width>
-      <height>591</height>
-     </rect>
-    </property>
-    <widget class="QGraphicsView" name="graphicsView">
-     <property name="geometry">
-      <rect>
-       <x>15</x>
-       <y>21</y>
-       <width>571</width>
-       <height>561</height>
-      </rect>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="layoutWidget2">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -383,7 +568,7 @@
         <number>6</number>
        </property>
        <item row="0" column="2">
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="typeLabel">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>2</horstretch>
@@ -414,7 +599,7 @@
         </widget>
        </item>
        <item row="1" column="2">
-        <widget class="QLabel" name="label_2">
+        <widget class="QLabel" name="ratioLabel">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>2</horstretch>
@@ -445,7 +630,10 @@
         </widget>
        </item>
        <item row="1" column="3">
-        <widget class="QLabel" name="label_6">
+        <widget class="QLabel" name="devLabel">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>2</horstretch>
@@ -477,6 +665,9 @@
        </item>
        <item row="0" column="0" rowspan="2">
         <widget class="QPushButton" name="btnConnect">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>1</horstretch>
@@ -495,7 +686,7 @@
         </widget>
        </item>
        <item row="0" column="3">
-        <widget class="QLabel" name="label_5">
+        <widget class="QLabel" name="firmLabel">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>2</horstretch>
@@ -631,6 +822,9 @@
       <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="0">
         <widget class="QPushButton" name="btnSave">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>1</horstretch>
@@ -650,6 +844,9 @@
        </item>
        <item row="0" column="1">
         <widget class="QPushButton" name="btnLoad">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>1</horstretch>
@@ -690,7 +887,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QComboBox" name="comboBox">
+   <widget class="QComboBox" name="adjustGroupComboBox">
     <property name="geometry">
      <rect>
       <x>1088</x>
@@ -720,6 +917,246 @@
       <string>3</string>
      </property>
     </item>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>621</width>
+      <height>551</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_OS"/>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>87</width>
+      <height>169</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="spacing">
+      <number>1</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="tgPOSPushButton">
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>tgPOS</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="tgSPDPushButton">
+       <property name="text">
+        <string>tgSPD</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="tgCURPushButton">
+       <property name="text">
+        <string>tgCUR</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="rlPOSPushButton">
+       <property name="text">
+        <string>rlPOS</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="rlSPDPushButton">
+       <property name="text">
+        <string>rlSPD</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="rlCURPushButton">
+       <property name="text">
+        <string>rlCUR</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>193</x>
+      <y>574</y>
+      <width>438</width>
+      <height>62</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_7">
+     <item row="1" column="0">
+      <widget class="QLineEdit" name="offset_CURLineEdit">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLineEdit" name="offset_POSLineEdit">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QComboBox" name="ScanFrequencyComboBox">
+       <item>
+        <property name="text">
+         <string>10ms/div</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>50ms/div</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>100ms/div</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QComboBox" name="srComboBox">
+       <item>
+        <property name="text">
+         <string>1rpm/div</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>5rpm/div</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>10rpm/div</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLineEdit" name="offset_SPDLineEdit">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="prComboBox">
+       <item>
+        <property name="text">
+         <string>10°/div</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>50°/div</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>100°/div</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>1000°/div</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="crComboBox">
+       <item>
+        <property name="text">
+         <string>20mA/div</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>50mA/div</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>100mA/div</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="scopeEnablePushButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>573</y>
+      <width>181</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>II</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget_6">
+    <property name="geometry">
+     <rect>
+      <x>675</x>
+      <y>385</y>
+      <width>441</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_11">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_22">
+       <property name="text">
+        <string>Limit Cur</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="maxCurLineEdit"/>
+     </item>
+     <item row="0" column="3">
+      <widget class="QLineEdit" name="maxSpdLineEdit"/>
+     </item>
+     <item row="0" column="4">
+      <widget class="QLabel" name="label_24">
+       <property name="text">
+        <string>Limit Acc</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLabel" name="label_23">
+       <property name="text">
+        <string>Limit Spd</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="5">
+      <widget class="QLineEdit" name="maxAccLineEdit"/>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>
