@@ -8,22 +8,6 @@
 using std::cout;
 using std::endl;
 
-// QString tgPOSPushButtonOn = "background-color: rgb(";
-// QString tgPOSPushButtonOff = "background-color: rgb(128, 128, 128);";
-// QString tgSPDPushButtonOn = "background-color: rgb(";
-// QString tgSPDPushButtonOff = tgPOSPushButtonOff;
-// QString tgCURPushButtonOn = "background-color: rgb(";
-// QString tgCURPushButtonOff = tgPOSPushButtonOff;
-// QString rlPOSPushButtonOn = "background-color: rgb(";
-// QString rlPOSPushButtonOff = tgPOSPushButtonOff;
-// QString rlSPDPushButtonOn = "background-color: rgb(";
-// QString rlSPDPushButtonOff = tgPOSPushButtonOff;
-// QString rlCURPushButtonOn = "background-color: rgb(";
-// QString rlCURPushButtonOff = tgPOSPushButtonOff;
-
-// QString scopeEnablePushButtonOn = "background-color: rgb(";
-// QString scopeEnablePushButtonOff = "background-color: rgb(";
-
 void MainWindow::OscilloScope()
 {
     timeOscilloScope = new QTimer(this);

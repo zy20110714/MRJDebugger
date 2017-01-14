@@ -20,16 +20,22 @@ SOURCES += main.cpp\
     node.cpp \
     mainwindow_OscilloScope.cpp \
     mainwindow_PID.cpp \
-    mainwindow_Set.cpp
+    mainwindow_Set.cpp \
+    mainwindow_support.cpp \
+    connectform.cpp
 
 HEADERS  += mainwindow.h \
     paintarea.h \
     showitem.h \
     showqueue.h \
-    node.h
+    node.h \
+    connectform.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    connectform.ui
 
 INCLUDEPATH += /home/zy/QtProjects/APIpthreadfordualarm/jointcontrolthread
 
 LIBS += -L/home/zy/QtProjects/APIpthreadfordualarm/lib -lOUR_jointcontrolthread
+
+RESOURCES +=

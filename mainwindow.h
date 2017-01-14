@@ -7,6 +7,8 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QTimer>
+#include <QKeyEvent>
+#include <QMouseEvent>
 #include <iostream>
 #include "joint_thread.h"
 #include "paintarea.h"
@@ -78,12 +80,12 @@ private slots:
     void on_maxCurLineEdit_editingFinished();
     void on_maxSpdLineEdit_editingFinished();
     void on_maxAccLineEdit_editingFinished();
-
     void on_IDPushButton_clicked();
-
     void on_setZeroPushButton_clicked();
-
     void on_ENonPPushButton_clicked();
+    void on_btnFlash_clicked();
+
+    void on_btnConnect_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -97,6 +99,10 @@ private:
     double bias;
     double frequency;
     double amplitude;
+    QString stopButtonOn;
+    QString stopButtonOff;
+    QString confirmButtonOn;
+    QString confirmButtonOff;
 
     // Osilloscope
     QTimer* time_clock;
@@ -130,6 +136,13 @@ private:
     QString ENonPPushButtonOn;
     QString ENonPPushButtonOff;
     void Set();
+
+    void support();
+    // keyPress
+    void keyPressEvent(QKeyEvent *);
+
+    // mouse move
+    void mouseMoveEvent(QMouseEvent *);
 
 protected:
 };

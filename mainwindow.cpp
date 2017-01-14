@@ -1,9 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "connectform.h"
+#include "ui_connectform.h"
 #include <vector>
 #include <math.h>
 #include <QDateTime>
 #include <QDebug>
+#include <QPicture>
+#include <QPixmap>
+#include <QPainter>
 
 #define PI 3.1415926
 
@@ -66,6 +71,15 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(time_clock,SIGNAL(timeout()),this,SLOT(slotTimeDone()));
     time_clock->start(MOTION_CONTROL_INTEVAL);
 
+    stopButtonOn = "background-color: rgb(";
+    stopButtonOn += QString::number(TGPOS_RGB_R) + ',' + QString::number(TGPOS_RGB_G) + ',' + QString::number(TGPOS_RGB_B) + ");";
+    stopButtonOff = "background-color: rgb(128, 128, 128);";
+    confirmButtonOn = "background-color: rgb(";
+    confirmButtonOn += QString::number(TGSPD_RGB_R) + ',' + QString::number(TGSPD_RGB_G) + ',' + QString::number(TGSPD_RGB_B) + ");";
+    confirmButtonOff = stopButtonOff;
+    ui->stopButton->setStyleSheet(stopButtonOn);
+    ui->confirmButton->setStyleSheet(confirmButtonOff);
+
     // initialize Oscilloscope - related content
     tgPOSPushButtonOn = "background-color: rgb(";
     tgPOSPushButtonOn += QString::number(TGPOS_RGB_R) + ',' + QString::number(TGPOS_RGB_G) + ',' + QString::number(TGPOS_RGB_B) + ");";
@@ -98,6 +112,9 @@ MainWindow::MainWindow(QWidget *parent) :
     PID();
 
     Set();
+
+    support();
+
 }
 
 MainWindow::~MainWindow()
@@ -328,11 +345,15 @@ void MainWindow::on_manualSlider_valueChanged(int value)
 void MainWindow::on_confirmButton_clicked()
 {
     EnableRun = true;
+    ui->stopButton->setStyleSheet(stopButtonOff);
+    ui->confirmButton->setStyleSheet(confirmButtonOn);
 }
 
 void MainWindow::on_stopButton_clicked()
 {
     EnableRun = false;
+    ui->stopButton->setStyleSheet(stopButtonOn);
+    ui->confirmButton->setStyleSheet(confirmButtonOff);
     int workMode = ui->cmbWorkMode->currentIndex();
     switch(workMode) // Different WorkMode Different Stop way
     {
@@ -521,4 +542,10 @@ void MainWindow::on_frequencyLineEdit_editingFinished()
 void MainWindow::on_AmplitudeLineEdit_editingFinished()
 {
     amplitude = ui->AmplitudeLineEdit->text().toDouble();
+}
+
+void MainWindow::on_btnConnect_clicked()
+{
+//    connectForm* c = new connectForm(this);
+//    c->show();
 }

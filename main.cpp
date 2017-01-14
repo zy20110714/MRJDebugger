@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "connectform.h"
 #include <QApplication>
 #include <QDesktopWidget>
 
