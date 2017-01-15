@@ -16,6 +16,7 @@
 
 #define MOTION_CONTROL_INTEVAL 10
 #define OSCILLO_SCOPE_INTEVAL 1
+#define MONITOR_INTEVAL 500
 #define MODE_MANUAL     0
 #define MODE_SINE       1
 #define MODE_SQUARE     2
@@ -47,6 +48,7 @@ private slots:
     void on_confirmButton_clicked();
     void slotTimeDone();
     void slotTimeOscilloScopeDone();
+    void slotTimeMonitorDone();
     void on_stopButton_clicked();
     void on_waveModeCombo_currentIndexChanged(int index);
     void on_frequencyLineEdit_editingFinished();
@@ -86,6 +88,11 @@ private slots:
     void on_btnFlash_clicked();
 
     void on_btnConnect_clicked();
+    void on_enableDriverPushButton_clicked();
+
+    void on_clearErrorButton_clicked();
+
+    void on_updateButton_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -143,6 +150,12 @@ private:
 
     // mouse move
     void mouseMoveEvent(QMouseEvent *);
+
+    // Bar
+    QTimer* timeMonitor;
+    void updateEnableDriver();
+    QString enableDriverPushButtonOn;
+    QString enableDriverPushButtonOff;
 
 protected:
 };

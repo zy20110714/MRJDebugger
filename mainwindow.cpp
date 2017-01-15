@@ -115,6 +115,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     support();
 
+    // Bar
+    enableDriverPushButtonOn = "background-color: rgb(";
+    enableDriverPushButtonOn += QString::number(ENonP_RGB_R) + ',' + QString::number(ENonP_RGB_G) + ',' + QString::number(ENonP_RGB_B) + ");";
+    enableDriverPushButtonOff = tgPOSPushButtonOn;
+    updateEnableDriver();
+    timeMonitor = new QTimer(this);
+    connect(timeMonitor,SIGNAL(timeout()),this,SLOT(slotTimeMonitorDone()));
+    timeMonitor->start(MONITOR_INTEVAL);
+
 }
 
 MainWindow::~MainWindow()
