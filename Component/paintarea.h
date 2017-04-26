@@ -6,7 +6,7 @@
 #include <QBrush>
 #include <QString>
 #include <QMap>
-#include <QList>
+#include <vector>
 #include "showitem.h"
 
 //示波器模块子索引地址定义
@@ -65,8 +65,9 @@ class PaintArea : public QWidget
 public:
     explicit PaintArea(QWidget *parent = 0);
     void paintEvent(QPaintEvent *);
+    ~PaintArea();
 
-    QList<ShowItem> showItems;
+    std::vector<ShowItem> showItems;
     unsigned int Mask;
     unsigned int ScanFrequency;
     int Interval; // The frequency at which new data is acquired
@@ -96,7 +97,10 @@ signals:
 public slots:
 
 private:
-    QPen pen; // creates a default pen
+//    QPen pen; // creates a default pen
+//    QPoint point1;
+//    QPoint point2;
+//    QPainter * p1;
     virtual void resizeEvent(QResizeEvent * event);
 
 };

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1154</width>
-    <height>713</height>
+    <height>693</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -16,11 +16,17 @@
     <height>0</height>
    </size>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>1154</width>
+    <height>693</height>
+   </size>
+  </property>
   <property name="mouseTracking">
    <bool>true</bool>
   </property>
   <property name="windowTitle">
-   <string>RSJ Debugger</string>
+   <string>MRJ Debugger v0.4.5</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="mouseTracking">
@@ -29,10 +35,10 @@
    <widget class="QComboBox" name="adjustGroupComboBox">
     <property name="geometry">
      <rect>
-      <x>1110</x>
+      <x>1107</x>
       <y>220</y>
       <width>40</width>
-      <height>26</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -71,10 +77,10 @@
    <widget class="QWidget" name="gridLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>6</x>
-      <y>6</y>
-      <width>681</width>
-      <height>601</height>
+      <x>10</x>
+      <y>620</y>
+      <width>16</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="font">
@@ -87,9 +93,9 @@
    <widget class="QPushButton" name="scopeEnablePushButton">
     <property name="geometry">
      <rect>
-      <x>5</x>
+      <x>344</x>
       <y>610</y>
-      <width>415</width>
+      <width>71</width>
       <height>40</height>
      </rect>
     </property>
@@ -148,7 +154,7 @@
      </property>
      <item>
       <property name="text">
-       <string>MANUAL</string>
+       <string>Manual</string>
       </property>
      </item>
      <item>
@@ -188,7 +194,7 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;模块控制方式&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="text">
-      <string>MODE</string>
+      <string>Mode</string>
      </property>
     </widget>
     <widget class="QPushButton" name="confirmButton">
@@ -212,15 +218,15 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;控制运动允许&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="text">
-      <string>OK</string>
+      <string>Click to run</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="manualMax">
      <property name="geometry">
       <rect>
-       <x>425</x>
+       <x>420</x>
        <y>175</y>
-       <width>30</width>
+       <width>40</width>
        <height>30</height>
       </rect>
      </property>
@@ -260,7 +266,7 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;模块工作模式&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="text">
-      <string>TARGET</string>
+      <string>Target</string>
      </property>
     </widget>
     <widget class="QLabel" name="BIASLabel">
@@ -284,7 +290,7 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;偏移量 / 手动控制中的目标值&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="text">
-      <string>BIAS</string>
+      <string>Bias</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="manualMin">
@@ -292,7 +298,7 @@
       <rect>
        <x>200</x>
        <y>175</y>
-       <width>30</width>
+       <width>40</width>
        <height>30</height>
       </rect>
      </property>
@@ -412,7 +418,7 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;自动控制的曲线频率&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="text">
-      <string>FREQ</string>
+      <string>Freq</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="frequencyLineEdit">
@@ -439,9 +445,9 @@
     <widget class="QSlider" name="manualSlider">
      <property name="geometry">
       <rect>
-       <x>231</x>
+       <x>240</x>
        <y>175</y>
-       <width>193</width>
+       <width>180</width>
        <height>29</height>
       </rect>
      </property>
@@ -489,6 +495,9 @@
      <property name="toolTip">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;运动停止&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <property name="text">
       <string>Stop</string>
      </property>
@@ -535,7 +544,7 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;自动控制的曲线振幅&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="text">
-      <string>AMP</string>
+      <string>Amp</string>
      </property>
     </widget>
    </widget>
@@ -727,6 +736,222 @@
        <number>65535</number>
       </property>
      </widget>
+     <widget class="QLineEdit" name="maxAccLineEdit">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>150</y>
+        <width>60</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;? rpm/s&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="limitAccLabel">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>150</y>
+        <width>70</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;最大加/减速度&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string>Limit Acc</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="minPosLLineEdit">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>30</y>
+        <width>60</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;? rpm/s&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="minPosLLabel">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>30</y>
+        <width>60</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;最大加/减速度&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string>Min POS_L</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="maxPosHLineEdit">
+      <property name="geometry">
+       <rect>
+        <x>390</x>
+        <y>70</y>
+        <width>60</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;? rpm/s&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="maxPosHLabel">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>70</y>
+        <width>60</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;最大加/减速度&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string>Max POS_H</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="maxPosLLineEdit">
+      <property name="geometry">
+       <rect>
+        <x>390</x>
+        <y>30</y>
+        <width>60</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;? rpm/s&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="minPosHLineEdit">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>70</y>
+        <width>60</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;? rpm/s&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="minPosHLabel">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>70</y>
+        <width>60</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;最大加/减速度&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string>Min POS_H</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="maxPosLLabel">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>30</y>
+        <width>60</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;最大加/减速度&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string>Max POS_L</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="SPD">
      <property name="mouseTracking">
@@ -890,6 +1115,48 @@
        <string>D:</string>
       </property>
      </widget>
+     <widget class="QLineEdit" name="maxSpdLineEdit">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>150</y>
+        <width>60</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;0.01rpm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="limitSpdLabel">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>150</y>
+        <width>70</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;最大速度&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string>Limit Spd</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="CUR">
      <property name="mouseTracking">
@@ -1045,12 +1312,57 @@
        <number>65535</number>
       </property>
      </widget>
+     <widget class="QLabel" name="limitCurLabel">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>150</y>
+        <width>70</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;最大电流&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string>Limit Cur</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="maxCurLineEdit">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>150</y>
+        <width>60</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;mA&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QComboBox" name="crComboBox">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>465</x>
+      <x>463</x>
       <y>630</y>
       <width>90</width>
       <height>20</height>
@@ -1074,7 +1386,7 @@
     </item>
     <item>
      <property name="text">
-      <string>50mA/div</string>
+      <string>60mA/div</string>
      </property>
     </item>
     <item>
@@ -1082,8 +1394,16 @@
       <string>100mA/div</string>
      </property>
     </item>
+    <item>
+     <property name="text">
+      <string>200mA/div</string>
+     </property>
+    </item>
    </widget>
    <widget class="QComboBox" name="srComboBox">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>600</x>
@@ -1105,24 +1425,27 @@
     </property>
     <item>
      <property name="text">
+      <string>0.5rpm/div</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
       <string>1rpm/div</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>5rpm/div</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>10rpm/div</string>
+      <string>2rpm/div</string>
      </property>
     </item>
    </widget>
    <widget class="QLineEdit" name="offset_SPDLineEdit">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>555</x>
+      <x>554</x>
       <y>610</y>
       <width>45</width>
       <height>20</height>
@@ -1144,11 +1467,14 @@
     </property>
    </widget>
    <widget class="QComboBox" name="ScanFrequencyComboBox">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>600</x>
+      <x>560</x>
       <y>630</y>
-      <width>90</width>
+      <width>16</width>
       <height>20</height>
      </rect>
     </property>
@@ -1180,9 +1506,12 @@
     </item>
    </widget>
    <widget class="QComboBox" name="prComboBox">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>465</x>
+      <x>463</x>
       <y>610</y>
       <width>90</width>
       <height>20</height>
@@ -1221,9 +1550,12 @@
     </item>
    </widget>
    <widget class="QLineEdit" name="offset_POSLineEdit">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>420</x>
+      <x>417</x>
       <y>610</y>
       <width>45</width>
       <height>20</height>
@@ -1245,9 +1577,12 @@
     </property>
    </widget>
    <widget class="QLineEdit" name="offset_CURLineEdit">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>420</x>
+      <x>417</x>
       <y>630</y>
       <width>45</width>
       <height>20</height>
@@ -1266,132 +1601,6 @@
     </property>
     <property name="text">
      <string>0</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="maxSpdLineEdit">
-    <property name="geometry">
-     <rect>
-      <x>910</x>
-      <y>400</y>
-      <width>60</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>9</pointsize>
-     </font>
-    </property>
-    <property name="toolTip">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;0.01rpm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="limitSpdLabel">
-    <property name="geometry">
-     <rect>
-      <x>840</x>
-      <y>400</y>
-      <width>70</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>9</pointsize>
-     </font>
-    </property>
-    <property name="mouseTracking">
-     <bool>true</bool>
-    </property>
-    <property name="toolTip">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;最大速度&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-    <property name="text">
-     <string>Limit Spd</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="limitAccLabel">
-    <property name="geometry">
-     <rect>
-      <x>980</x>
-      <y>400</y>
-      <width>70</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>9</pointsize>
-     </font>
-    </property>
-    <property name="mouseTracking">
-     <bool>true</bool>
-    </property>
-    <property name="toolTip">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;最大加/减速度&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-    <property name="text">
-     <string>Limit Acc</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="limitCurLabel">
-    <property name="geometry">
-     <rect>
-      <x>700</x>
-      <y>400</y>
-      <width>70</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>9</pointsize>
-     </font>
-    </property>
-    <property name="mouseTracking">
-     <bool>true</bool>
-    </property>
-    <property name="toolTip">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;最大电流&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-    <property name="text">
-     <string>Limit Cur</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="maxCurLineEdit">
-    <property name="geometry">
-     <rect>
-      <x>770</x>
-      <y>400</y>
-      <width>60</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>9</pointsize>
-     </font>
-    </property>
-    <property name="toolTip">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;mA&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="maxAccLineEdit">
-    <property name="geometry">
-     <rect>
-      <x>1050</x>
-      <y>400</y>
-      <width>60</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>9</pointsize>
-     </font>
-    </property>
-    <property name="toolTip">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;? rpm/s&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QTabWidget" name="Monitor">
@@ -1426,7 +1635,7 @@
        <rect>
         <x>70</x>
         <y>40</y>
-        <width>120</width>
+        <width>125</width>
         <height>26</height>
        </rect>
       </property>
@@ -1442,7 +1651,7 @@
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;设置模块当前位置为零点&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="text">
-       <string>ZERO</string>
+       <string>Set Zero Position</string>
       </property>
      </widget>
      <widget class="QPushButton" name="IDPushButton">
@@ -1450,7 +1659,7 @@
        <rect>
         <x>70</x>
         <y>10</y>
-        <width>120</width>
+        <width>125</width>
         <height>26</height>
        </rect>
       </property>
@@ -1466,7 +1675,7 @@
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;设置模块ID&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="text">
-       <string>ID</string>
+       <string>Set ID</string>
       </property>
      </widget>
      <widget class="QPushButton" name="ENonPPushButton">
@@ -1474,7 +1683,7 @@
        <rect>
         <x>70</x>
         <y>70</y>
-        <width>120</width>
+        <width>125</width>
         <height>26</height>
        </rect>
       </property>
@@ -1496,7 +1705,7 @@
        <string/>
       </property>
       <property name="text">
-       <string>ENonP</string>
+       <string>Set Enable On Power</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="IDLineEdit">
@@ -1619,9 +1828,6 @@
       </property>
      </widget>
      <widget class="QLineEdit" name="AccZLineEdit">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -1703,9 +1909,6 @@
       </property>
      </widget>
      <widget class="QLineEdit" name="AccXLineEdit">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -1742,9 +1945,6 @@
       </property>
      </widget>
      <widget class="QLineEdit" name="AccYLineEdit">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -1803,7 +2003,7 @@
      </widget>
      <widget class="QLineEdit" name="POS_HLineEdit">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
@@ -1821,7 +2021,7 @@
      </widget>
      <widget class="QLineEdit" name="STurnLineEdit">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
@@ -1839,7 +2039,7 @@
      </widget>
      <widget class="QLineEdit" name="POS_LLineEdit">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
@@ -1920,7 +2120,7 @@
      </widget>
      <widget class="QLineEdit" name="MTurnLineEdit">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
@@ -1984,8 +2184,8 @@
      <widget class="QPushButton" name="updateButton">
       <property name="geometry">
        <rect>
-        <x>170</x>
-        <y>130</y>
+        <x>260</x>
+        <y>161</y>
         <width>99</width>
         <height>27</height>
        </rect>
@@ -2011,14 +2211,17 @@
         <x>298</x>
         <y>10</y>
         <width>20</width>
-        <height>141</height>
+        <height>110</height>
        </rect>
+      </property>
+      <property name="mouseTracking">
+       <bool>true</bool>
       </property>
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
      </widget>
-     <widget class="QLabel" name="SpeedLabel_2">
+     <widget class="QLabel" name="ErrorLabel">
       <property name="geometry">
        <rect>
         <x>325</x>
@@ -2043,7 +2246,7 @@
       <property name="geometry">
        <rect>
         <x>345</x>
-        <y>70</y>
+        <y>130</y>
         <width>99</width>
         <height>27</height>
        </rect>
@@ -2063,15 +2266,64 @@
        <string>Clear</string>
       </property>
      </widget>
+     <widget class="QLabel" name="BATVoltLabel">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>130</y>
+        <width>60</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>BAT Volt:</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="BATVoltLineEdit">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>130</y>
+        <width>70</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+     </widget>
+     <widget class="QTextEdit" name="errorTextEdit">
+      <property name="geometry">
+       <rect>
+        <x>345</x>
+        <y>30</y>
+        <width>90</width>
+        <height>91</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QPushButton" name="tgSPDPushButton">
     <property name="geometry">
      <rect>
-      <x>5</x>
-      <y>25</y>
+      <x>110</x>
+      <y>610</y>
       <width>55</width>
-      <height>20</height>
+      <height>19</height>
      </rect>
     </property>
     <property name="font">
@@ -2094,10 +2346,10 @@
    <widget class="QPushButton" name="rlPOSPushButton">
     <property name="geometry">
      <rect>
-      <x>5</x>
-      <y>65</y>
+      <x>190</x>
+      <y>630</y>
       <width>55</width>
-      <height>20</height>
+      <height>19</height>
      </rect>
     </property>
     <property name="font">
@@ -2120,10 +2372,10 @@
    <widget class="QPushButton" name="tgPOSPushButton">
     <property name="geometry">
      <rect>
-      <x>5</x>
-      <y>5</y>
+      <x>190</x>
+      <y>610</y>
       <width>55</width>
-      <height>20</height>
+      <height>19</height>
      </rect>
     </property>
     <property name="font">
@@ -2149,10 +2401,10 @@
    <widget class="QPushButton" name="rlCURPushButton">
     <property name="geometry">
      <rect>
-      <x>5</x>
-      <y>105</y>
+      <x>30</x>
+      <y>630</y>
       <width>55</width>
-      <height>20</height>
+      <height>19</height>
      </rect>
     </property>
     <property name="font">
@@ -2175,10 +2427,10 @@
    <widget class="QPushButton" name="rlSPDPushButton">
     <property name="geometry">
      <rect>
-      <x>5</x>
-      <y>85</y>
+      <x>110</x>
+      <y>630</y>
       <width>55</width>
-      <height>20</height>
+      <height>19</height>
      </rect>
     </property>
     <property name="font">
@@ -2201,10 +2453,10 @@
    <widget class="QPushButton" name="tgCURPushButton">
     <property name="geometry">
      <rect>
-      <x>5</x>
-      <y>45</y>
+      <x>30</x>
+      <y>610</y>
       <width>55</width>
-      <height>20</height>
+      <height>19</height>
      </rect>
     </property>
     <property name="font">
@@ -2230,7 +2482,7 @@
       <x>5</x>
       <y>650</y>
       <width>1145</width>
-      <height>60</height>
+      <height>40</height>
      </rect>
     </property>
     <property name="mouseTracking">
@@ -2242,14 +2494,14 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QPushButton" name="pushButton_7">
+    <widget class="QPushButton" name="ifErrorPushButton">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="geometry">
       <rect>
        <x>590</x>
-       <y>45</y>
+       <y>25</y>
        <width>100</width>
        <height>15</height>
       </rect>
@@ -2278,14 +2530,11 @@
       <string>NO ERROR</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_4">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
+    <widget class="QPushButton" name="connectedPushButton">
      <property name="geometry">
       <rect>
        <x>290</x>
-       <y>45</y>
+       <y>25</y>
        <width>100</width>
        <height>15</height>
       </rect>
@@ -2315,15 +2564,12 @@
      </property>
     </widget>
     <widget class="QPushButton" name="btnSave">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
      <property name="geometry">
       <rect>
        <x>905</x>
        <y>0</y>
        <width>80</width>
-       <height>60</height>
+       <height>40</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -2358,8 +2604,8 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>55</width>
-       <height>60</height>
+       <width>16</width>
+       <height>20</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -2390,9 +2636,9 @@
      <property name="geometry">
       <rect>
        <x>120</x>
-       <y>30</y>
+       <y>20</y>
        <width>85</width>
-       <height>30</height>
+       <height>20</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -2440,7 +2686,7 @@
        <x>290</x>
        <y>0</y>
        <width>80</width>
-       <height>45</height>
+       <height>25</height>
       </rect>
      </property>
      <property name="font">
@@ -2458,14 +2704,11 @@
       <string>Online Help</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_6">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
+    <widget class="QPushButton" name="workModePushButton">
      <property name="geometry">
       <rect>
        <x>490</x>
-       <y>45</y>
+       <y>25</y>
        <width>100</width>
        <height>15</height>
       </rect>
@@ -2491,7 +2734,7 @@
       <bool>true</bool>
      </property>
      <property name="text">
-      <string>POS LOOP</string>
+      <string>工作模式</string>
      </property>
     </widget>
     <widget class="QComboBox" name="cmbID">
@@ -2500,7 +2743,7 @@
        <x>55</x>
        <y>0</y>
        <width>65</width>
-       <height>60</height>
+       <height>40</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -2533,7 +2776,7 @@
        <x>370</x>
        <y>0</y>
        <width>535</width>
-       <height>45</height>
+       <height>25</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -2561,15 +2804,12 @@
      </property>
     </widget>
     <widget class="QPushButton" name="btnLoad">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
      <property name="geometry">
       <rect>
        <x>985</x>
        <y>0</y>
        <width>80</width>
-       <height>60</height>
+       <height>40</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -2602,10 +2842,10 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>390</x>
-       <y>45</y>
-       <width>100</width>
-       <height>15</height>
+       <x>0</x>
+       <y>0</y>
+       <width>55</width>
+       <height>20</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -2629,7 +2869,7 @@
       <bool>true</bool>
      </property>
      <property name="text">
-      <string>ENABLED</string>
+      <string>模块使能</string>
      </property>
     </widget>
     <widget class="QLabel" name="typeLabel">
@@ -2638,7 +2878,7 @@
        <x>120</x>
        <y>0</y>
        <width>85</width>
-       <height>30</height>
+       <height>20</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -2683,10 +2923,10 @@
     <widget class="QLabel" name="firmLabel">
      <property name="geometry">
       <rect>
-       <x>205</x>
+       <x>208</x>
        <y>0</y>
-       <width>85</width>
-       <height>30</height>
+       <width>82</width>
+       <height>20</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -2734,10 +2974,10 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>205</x>
-       <y>30</y>
-       <width>85</width>
-       <height>30</height>
+       <x>208</x>
+       <y>20</y>
+       <width>82</width>
+       <height>20</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -2782,7 +3022,7 @@
        <x>1065</x>
        <y>0</y>
        <width>80</width>
-       <height>60</height>
+       <height>40</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -2812,7 +3052,196 @@
       <string>FLASH</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="btnUpdateID">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>20</y>
+       <width>55</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>更新ID</string>
+     </property>
+    </widget>
+    <widget class="Line" name="line_2">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>20</y>
+       <width>170</width>
+       <height>3</height>
+      </rect>
+     </property>
+     <property name="mouseTracking">
+      <bool>true</bool>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="Line" name="line_3">
+     <property name="geometry">
+      <rect>
+       <x>205</x>
+       <y>0</y>
+       <width>3</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="mouseTracking">
+      <bool>true</bool>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+    <widget class="Line" name="line_5">
+     <property name="geometry">
+      <rect>
+       <x>279</x>
+       <y>0</y>
+       <width>20</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="mouseTracking">
+      <bool>true</bool>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="enableDriverPushButton_2">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>390</x>
+       <y>25</y>
+       <width>100</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>2</horstretch>
+       <verstretch>2</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>1</width>
+       <height>1</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="mouseTracking">
+      <bool>true</bool>
+     </property>
+     <property name="text">
+      <string>ENABLE</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelShowEnablePic">
+     <property name="geometry">
+      <rect>
+       <x>690</x>
+       <y>25</y>
+       <width>100</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
    </widget>
+   <widget class="Line" name="line_4">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>650</y>
+      <width>370</width>
+      <height>2</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QwtPlot" name="plot">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>5</y>
+      <width>685</width>
+      <height>200</height>
+     </rect>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="xDivComboBox">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>630</y>
+      <width>90</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;速度曲线分度值&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <item>
+     <property name="text">
+      <string>1s/div</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QwtPlot" name="plotSPD">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>207</y>
+      <width>685</width>
+      <height>200</height>
+     </rect>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QwtPlot" name="plotPOS">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>409</y>
+      <width>685</width>
+      <height>200</height>
+     </rect>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <zorder>plot</zorder>
    <zorder>PID</zorder>
    <zorder>crComboBox</zorder>
    <zorder>srComboBox</zorder>
@@ -2821,12 +3250,6 @@
    <zorder>prComboBox</zorder>
    <zorder>offset_POSLineEdit</zorder>
    <zorder>offset_CURLineEdit</zorder>
-   <zorder>maxSpdLineEdit</zorder>
-   <zorder>limitSpdLabel</zorder>
-   <zorder>limitAccLabel</zorder>
-   <zorder>limitCurLabel</zorder>
-   <zorder>maxCurLineEdit</zorder>
-   <zorder>maxAccLineEdit</zorder>
    <zorder>Monitor</zorder>
    <zorder>adjustGroupComboBox</zorder>
    <zorder>gridLayoutWidget</zorder>
@@ -2839,9 +3262,20 @@
    <zorder>tgCURPushButton</zorder>
    <zorder>TestRun</zorder>
    <zorder>Bar</zorder>
+   <zorder>line_4</zorder>
+   <zorder>xDivComboBox</zorder>
+   <zorder>plotSPD</zorder>
+   <zorder>plotPOS</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QwtPlot</class>
+   <extends>QFrame</extends>
+   <header>qwt_plot.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
