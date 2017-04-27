@@ -221,6 +221,8 @@ void MainWindow::on_stopButton_clicked()
     }
     // In fact, Stop means setting the Bias, and the text of Bias could be updated by simulate WorkMode change
     workModeUpdatetxtBias();
+    // 实际使用中，在速度模式下，Stop后不会马上变成0，导致显示的速度不为0，而实际已经停止
+    ui->txtBias->setValue(0.0f); // 补充修改Bias的值为0
     txtBiasChangemanualSlider();
 }
 

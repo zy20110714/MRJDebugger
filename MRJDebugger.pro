@@ -10,7 +10,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = MRJDebugger
 TEMPLATE = app
-RC_FILE = MRJDICO.rc
 
 SOURCES += main.cpp\
     mainwindow.cpp \
@@ -40,13 +39,17 @@ FORMS    += mainwindow.ui \
     advancedcontrol.ui
 
 #INCLUDEPATH += /home/zy/QtProjects/APIpthreadfordualarm/jointcontrolthread
+#LIBS += -L/home/zy/QtProjects/APIpthreadfordualarm/lib -lOUR_jointcontrolthread
 
 include ($$PWD/qwt/qwt.prf)
+#INCLUDEPATH += C:/Qwt-6.1.3/include
+#LIBS += C:/Qwt-6.1.3/lib/qwt.dll
+
 INCLUDEPATH += $$PWD/Include \
     $$PWD/Component
 
-#LIBS += -L/home/zy/QtProjects/APIpthreadfordualarm/lib -lOUR_jointcontrolthread
 LIBS += $$PWD/build/release/CANAPI.dll
 
 RESOURCES += \
     image.qrc
+RC_FILE = MRJDebugger.rc

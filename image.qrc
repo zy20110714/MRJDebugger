@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>images/off.png</file>
+        <file>images/on.png</file>
+        <file>images/MRJDICO2.ico</file>
+    </qresource>
+</RCC>
