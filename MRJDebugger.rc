@@ -7,7 +7,7 @@ IDI_ICON1   ICON    DISCARDABLE    "images/MRJDICO2.ico"
 # endif
 
 VS_VERSION_INFO VERSIONINFO
-        FILEVERSION 0,4,6,1
+        FILEVERSION 0,4,6,2
         PRODUCTVERSION 0,4
 	FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -25,7 +25,7 @@ VS_VERSION_INFO VERSIONINFO
 			BEGIN
 				VALUE "CompanyName", "\0"
                                 VALUE "FileDescription", "MRJDebugger\0"
-                                VALUE "FileVersion", "0.4.6.1\0"
+                                VALUE "FileVersion", "0.4.6.2\0"
 				VALUE "LegalCopyright", "\0"
                                 VALUE "OriginalFilename", "MRJDebugger\0"
                                 VALUE "ProductName", "MRJDebugger\0"
