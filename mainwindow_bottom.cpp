@@ -90,8 +90,7 @@ void MainWindow::updateConnected() {
 void MainWindow::on_btnFlash_clicked()
 {
     bool isSuccess = false;
-//    isSuccess = can1->JointSaveToFlash(jointBeingUsed);
-    jointBeingUsed->setSaveToFlash();
+    isSuccess = jointBeingUsed->setSaveToFlash();
     if (isSuccess) {
         QMessageBox::information(this,"提示","烧写Flash成功！");
     } else {
