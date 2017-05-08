@@ -32,7 +32,24 @@ void MainWindow::Set()
 void MainWindow::on_IDPushButton_clicked()
 {
     int newID = ui->IDLineEdit->text().toInt();
-    jointBeingUsed->setID(newID);
+    if (newID > SEARCH_MAX_ID) {
+        QMessageBox::warning(this,"警告","ID设置过大！");
+    } else {
+        // 设新的ID
+        jointBeingUsed->setID(newID);
+        // 总线上的通信还是以旧ID进行的
+        jointBeingUsed->setSaveToFlash();
+        // 将软件当前控制的模块ID，更新为新ID，不然软件崩溃
+        on_btnUpdateID_clicked(); // 更新CAN线上的设备，可能由于ID重复而更新失败，应该增加ID恢复的功能
+        // 选中触发cmbID的index改变的槽函数
+        for (int i = 1; i <= ui->cmbID->count(); i++) {
+            if (newID == ui->cmbID->itemText(i - 1).toInt()) { // index从0开始，size从1开始
+                ui->cmbID->setCurrentIndex(i - 1);
+                break;
+            }
+        }
+        QMessageBox::information(this, "提示", "请将模块重新上电并在软件中更新ID");
+    }
 }
 
 void MainWindow::on_setZeroPushButton_clicked()

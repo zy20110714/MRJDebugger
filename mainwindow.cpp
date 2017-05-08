@@ -15,55 +15,35 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    can1(new UserControlOnCan),     // 调用API开启CAN线上的线程
+    ui(new Ui::MainWindow),
+    jointBeingUsed(NULL),
+    timerMove(NULL),
+    paintArea(NULL),
+    timerOscilloScope(NULL),        // 并没有使用
+    curveTgPOS(NULL),
+    curveTgSPD(NULL),
+    curveTgCUR(NULL),
+    curveRlPOS(NULL),
+    curveRlSPD(NULL),
+    curveRlCUR(NULL),
+    grid(NULL),
+    curveGrid(NULL),
+    timerMonitor(NULL),             // 监视器用的定时器
+    timerBottom(NULL)
 {
-    // 调用API开启CAN线上的线程
-    can1 = new UserControlOnCan();
-    if(!can1->Init("pcan0")) { // 不能捕获CAN API输出的信息
+    if( !can1->Init("pcan0") ) {
+        // 不能捕获CAN API输出的信息
         QMessageBox::warning(this,"警告","CAN初始化失败！");
         // 临时的处理方法，直接退出程序
         exit(0);
     }
 
-    jointBeingUsed = 0;
-    timerMove = NULL;
-    timerMonitor = NULL; // 监视器用的定时器
-    timerBottom = NULL;
-    timerOscilloScope = NULL; // 并没有使用
-    paintArea = NULL;
-    curveTgPOS = NULL;
-    curveTgSPD = NULL;
-    curveTgCUR = NULL;
-    curveRlPOS = NULL;
-    curveRlSPD = NULL;
-    curveRlCUR = NULL;
-    curveGrid = NULL;
-    grid = NULL;
-
-
     // 启动ui界面
     ui->setupUi(this);
-    // 测试代码
-//    ui->labelShowEnablePic->setPixmap(QPixmap("1.jpg"));
-    ui->labelShowEnablePic->hide();
-
-
     // 开启新线程准备显示示波器曲线
-//    QThread t(this);
     OscilloScopeThread osthread(this);
     osthread.start();
-//    osthread.moveToThread(&t);
-//    t.start();
-//    osthread.selfRun();
-
-//    try {
-//        HANDLE handle = (HANDLE)_beginthreadex(NULL, 0, oscilloScopeThreadStaticEntryPoint, this, 0, NULL);
-//        WaitForSingleObject(handle, 5);
-//        qDebug() << "oscilloScopeThread init success !" << endl;
-//    } catch (std::exception) {
-//        QMessageBox::warning(this,"警告","线程初始化失败！");
-//        exit(EXIT_FAILURE);
-//    }
     // 从JointThread读已有的ID，添加到ui的cmbID控件上
     updatecmbID();
 }
@@ -73,7 +53,8 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::mouseMoveEvent(QMouseEvent *e) {
+void MainWindow::mouseMoveEvent(QMouseEvent *e)
+{
     QPoint centralWidget = ui->centralWidget->pos(); // (0,0)
 
     // TestRun中的控件
@@ -88,11 +69,6 @@ void MainWindow::mouseMoveEvent(QMouseEvent *e) {
     QRect manualSlider = QRect(ui->manualSlider->pos() + centralWidget + TestRun, ui->manualSlider->size());
     QRect stopButton = QRect(ui->stopButton->pos() + centralWidget + TestRun, ui->stopButton->size());
     QRect waveModeCombo = QRect(ui->waveModeCombo->pos() + centralWidget + TestRun, ui->waveModeCombo->size());
-    // QRect txtBias = QRect(ui->txtBias->pos() + centralWidget + TestRun, ui->txtBias->size());
-    // QRect AmplitudeLineEdit = QRect(ui->AmplitudeLineEdit->pos() + centralWidget + TestRun, ui->AmplitudeLineEdit->size());
-    // QRect frequencyLineEdit = QRect(ui->frequencyLineEdit->pos() + centralWidget + TestRun, ui->frequencyLineEdit->size());
-    // QRect manualMax = QRect(ui->manualMax->pos() + centralWidget + TestRun, ui->manualMax->size());
-    // QRect manualMin = QRect(ui->manualMin->pos() + centralWidget + TestRun, ui->manualMin->size());
 
     // 示波器中的控件
     QRect ScanFrequencyComboBox = QRect(ui->ScanFrequencyComboBox->pos() + centralWidget, ui->ScanFrequencyComboBox->size());
@@ -107,12 +83,6 @@ void MainWindow::mouseMoveEvent(QMouseEvent *e) {
     QRect scopeEnablePushButton = QRect(ui->scopeEnablePushButton->pos() + centralWidget, ui->scopeEnablePushButton->size());
     QRect srComboBox = QRect(ui->srComboBox->pos() + centralWidget, ui->srComboBox->size());
 
-//    // PID中的控件
-//    QRect adjustGroupComboBox = QRect(ui->adjustGroupComboBox->pos() + centralWidget, ui->adjustGroupComboBox->size());
-//    QRect limitAccLabel = QRect(ui->limitAccLabel->pos() + centralWidget, ui->limitAccLabel->size());
-//    QRect limitCurLabel = QRect(ui->limitCurLabel->pos() + centralWidget, ui->limitCurLabel->size());
-//    QRect limitSpdLabel = QRect(ui->limitSpdLabel->pos() + centralWidget, ui->limitSpdLabel->size());
-
     // Bar中的控件
     QPoint Bar = ui->Bar->pos();
     QRect btnFlash = QRect(ui->btnFlash->pos() + centralWidget + Bar, ui->btnFlash->size());
@@ -122,31 +92,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *e) {
     QRect ratioLabel = QRect(ui->ratioLabel->pos() + centralWidget + Bar, ui->ratioLabel->size());
     QRect typeLabel = QRect(ui->typeLabel->pos() + centralWidget + Bar, ui->typeLabel->size());
 
-    // 布局里的mouseMoveEvent就不能正常响应了。
-    // QRect AMPLabel = QRect(ui->AMPLabel->pos() + centralWidget + TestRun, ui->AMPLabel->size());
-    // if(AMPLabel.contains(e->pos())) {
-    //     ui->helpTextEdit->setText(ui->AMPLabel->toolTip());
-    //     return;
-    // }
-
-    // Monitor中的控件
-    // QPoint Monitor = ui->Monitor->pos();
-    // QPoint Set = ui->SET->pos();
-    // QRect ENonPPushButton = QRect(ui->ENonPPushButton->pos() + centralWidget + Monitor + Set, ui->ENonPPushButton->size());
-    // if(ENonPPushButton.contains(e->pos())) {
-    //     ui->helpTextEdit->setText(ui->ENonPPushButton->toolTip());
-    //     return;
-    // }
-
-
-    // 测试信息输出
-//     cout << "e->pos(): (" << e->pos().x() << "," << e->pos().y() << ")" << endl;
-//     cout << "TestRun->pos(): (" << TestRun.x() << "," << TestRun.y() << ")" << endl;
-//     cout << "AmplitudeLineEdit: (" << AmplitudeLineEdit.x() << "," << AmplitudeLineEdit.y() << ")" << endl;
-//     cout << "ENonPPushButton: (" << ENonPPushButton.x() << "," << ENonPPushButton.y() << ")" << endl;
-//     cout << "ScanFrequencyCombBox: (" << ScanFrequencyComboBox.x() << "," << ScanFrequencyComboBox.y() << ")" << endl;
-//     cout.flush();
-
+    // 在helpTextEdit中显示提示内容
     ui->helpTextEdit->setText("");
     if(AMPLabel.contains(e->pos())) {
         ui->helpTextEdit->setText(ui->AMPLabel->toolTip());
@@ -233,23 +179,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *e) {
         ui->helpTextEdit->setText(ui->srComboBox->toolTip());
         return;
     }
-//    // PID中的控件 // 由于离开控件时取消显示的问题，暂不显示信息
-//    if(adjustGroupComboBox.contains(e->pos())) {
-//        ui->helpTextEdit->setText(ui->adjustGroupComboBox->toolTip());
-//        return;
-//    }
-//    if(limitAccLabel.contains(e->pos())) {
-//        ui->helpTextEdit->setText(ui->limitAccLabel->toolTip());
-//        return;
-//    }
-//    if(limitCurLabel.contains(e->pos())) {
-//        ui->helpTextEdit->setText(ui->limitCurLabel->toolTip());
-//        return;
-//    }
-//    if(limitSpdLabel.contains(e->pos())) {
-//        ui->helpTextEdit->setText(ui->limitSpdLabel->toolTip());
-//        return;
-//    }
+    // PID中的控件 // 由于离开控件时取消显示的问题，暂不显示信息
     // Bar中的控件
     if(btnFlash.contains(e->pos())) {
         ui->helpTextEdit->setText(ui->btnFlash->toolTip());
@@ -279,13 +209,9 @@ void MainWindow::mouseMoveEvent(QMouseEvent *e) {
 
 void MainWindow::keyPressEvent(QKeyEvent *e)
 {
-    // 按住ctrl、shift、alt和F7，再单击左键，则进入命令发送高级模式
+    // 按住ctrl、shift、alt和F7，则进入命令发送高级模式
     if (e->modifiers() == (Qt::ShiftModifier | Qt::ControlModifier | Qt::AltModifier) && e->key() == Qt::Key_F7) {
-//        if (QApplication::mouseButtons() == Qt::LeftButton) {
             advControlForm = new AdvancedControl(this, can1);
             advControlForm->show();
-//            QMessageBox::information(this,"提示","命令发送高级模式！");
-//        }
     }
 }
-

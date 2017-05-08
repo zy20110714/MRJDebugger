@@ -53,3 +53,6 @@ LIBS += $$PWD/build/release/CANAPI.dll
 RESOURCES += \
     image.qrc
 RC_FILE = MRJDebugger.rc
+
+#DISTFILES += \
+#    MRJDebugger.rc

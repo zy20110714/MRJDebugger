@@ -22,18 +22,18 @@
 #include <qwt_plot_panner.h>
 #include "oscilloscopethread.h"
 
-#define MOTION_CONTROL_INTEVAL 30
-#define OSCILLO_SCOPE_INTEVAL 10
-#define MONITOR_INTEVAL 500
-#define BOTTOM_UPDATE_INTEVAL 2000
-#define MODE_MANUAL     0
-#define MODE_SINE       1
-#define MODE_SQUARE     2
-#define MODE_TRIANGLE   3
+#define MOTION_CONTROL_INTEVAL 30   // 运动控制周期（ms）
+#define OSCILLO_SCOPE_INTEVAL 10    // 示波器采样周期（ms）
+#define MONITOR_INTEVAL 500         // 监视器更新周期（ms）
+#define BOTTOM_UPDATE_INTEVAL 2000  // 底部更新周期（ms）
+#define MODE_MANUAL     0           // 手动控制
+#define MODE_SINE       1           // 自动控制之正弦波
+#define MODE_SQUARE     2           // 自动控制之方波
+#define MODE_TRIANGLE   3           // 自动控制之三角波
 
-#define ENonP_RGB_R 131 // Greenery 131, 177, 78
-#define ENonP_RGB_G 177
-#define ENonP_RGB_B 78
+#define ENonP_RGB_R 131             // enable on power 按键的颜色定义
+#define ENonP_RGB_G 177             //
+#define ENonP_RGB_B 78              // Greenery 131, 177, 78
 
 namespace Ui {
 class MainWindow;
@@ -46,12 +46,12 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    UserControlOnCan* can1;
+    // CANAPI
+    UserControlOnCan * can1;
     // Osilloscope
     void slotTimeOscilloScopeDone();
 
 private slots:
-    void on_cmbID_currentIndexChanged(const QString &arg1);
     // move
     void on_txtBias_editingFinished();
     void on_cmbWorkMode_currentIndexChanged(int index);
@@ -97,6 +97,10 @@ private slots:
     void on_maxCurLineEdit_editingFinished();
     void on_maxSpdLineEdit_editingFinished();
     void on_maxAccLineEdit_editingFinished();
+    void on_minPosLLineEdit_editingFinished();
+    void on_maxPosLLineEdit_editingFinished();
+    void on_minPosHLineEdit_editingFinished();
+    void on_maxPosHLineEdit_editingFinished();
     // set
     void on_IDPushButton_clicked();
     void on_setZeroPushButton_clicked();
@@ -106,33 +110,20 @@ private slots:
     void on_enableDriverPushButton_clicked();
     void on_clearErrorButton_clicked();
     void on_updateButton_clicked();
-
-    void on_btnUpdateID_clicked();
     // bottom
+    void on_btnUpdateID_clicked();
     void slotTimeBottomDone();
     void on_btnSave_clicked();
     void on_btnLoad_clicked();
-
-    void on_minPosLLineEdit_editingFinished();
-
-    void on_maxPosLLineEdit_editingFinished();
-
-    void on_minPosHLineEdit_editingFinished();
-
-    void on_maxPosHLineEdit_editingFinished();
-
+    void on_cmbID_currentIndexChanged(const QString &arg1);
     void on_enableDriverPushButton_toggled(bool checked);
 
 private:
-    Ui::MainWindow *ui;
-    AdvancedControl *advControlForm;
-    PaintArea* paintArea;
-    Joint * jointBeingUsed; // 标记当前选中的关节
-    void updatecmbID();
-
+    Ui::MainWindow *ui;                 // 主要界面
+    AdvancedControl *advControlForm;    // 另一界面
+    Joint * jointBeingUsed;             // 标记当前选中的关节
     // move
     QTimer* timerMove;
-    uint16_t modelTypeBeingUsed;
     bool EnableRun;
     double bias;
     double frequency;
@@ -144,8 +135,8 @@ private:
     void workModeUpdatetxtBias();
     void txtBiasChangemanualSlider();
     void moveInitialize();
-
     // Osilloscope
+    PaintArea* paintArea;
     QTimer* timerOscilloScope;
     QString tgPOSPushButtonOn;
     QString tgPOSPushButtonOff;
@@ -176,23 +167,19 @@ private:
     QwtPlotMagnifier * plotMag;
     QwtPlotMagnifier * plotSPDMag;
     QwtPlotMagnifier * plotPOSMag;
-
-    // adjust PID
+    // PID
     void PID();
     void showSEVPID();
     void showMPID();
     void showLPID();
     void setNewPID(int value,int index);
-
     // basic setting operation
     QString ENonPPushButtonOn;
     QString ENonPPushButtonOff;
     void Set();
-
     // health
     QTimer* timerMonitor;
     void health();
-
     // bottom
     QTimer* timerBottom;
     void updateEnableDriver();
@@ -203,14 +190,12 @@ private:
     QString enableDriverPushButtonOff;
     QString ifErrorPushButton_NoError;
     QString ifErrorPushButton_Error;
-
+    void updatecmbID();
+    uint16_t modelTypeBeingUsed;
     // keyPress
     void keyPressEvent(QKeyEvent *);
-
     // mouse move
     void mouseMoveEvent(QMouseEvent *);
-
-protected:
 };
 
 #endif // MAINWINDOW_H

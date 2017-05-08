@@ -17,16 +17,24 @@ using std::sort;
 
 void MainWindow::on_enableDriverPushButton_toggled(bool checked)
 {
-    qDebug() << "on_enableDriverPushButton_toggled: " << checked << endl;
+    qDebug() << "on_enableDriverPushButton_toggled(): "
+             << "checked = "
+             << checked;
 }
 
 void MainWindow::on_enableDriverPushButton_clicked()
 {
     // 先更新当前的状态
-    can1->controller.SendMsg(jointBeingUsed->ID,CMDTYPE_RD,SYS_ENABLE_DRIVER,NULL,0x02);
+    can1->controller.SendMsg(jointBeingUsed->ID,
+                             CMDTYPE_RD,
+                             SYS_ENABLE_DRIVER,
+                             NULL,
+                             0x02);
     can1->controller.delayMs(5);
     uint16_t data_L = 0;
-    can1->controller.GetValueInTable(jointBeingUsed->ID, SYS_ENABLE_DRIVER, data_L);
+    can1->controller.GetValueInTable(jointBeingUsed->ID,
+                                     SYS_ENABLE_DRIVER,
+                                     data_L);
     // 准备反转当前的状态
     bool isEnable = false;
     if (data_L != 0) {
@@ -35,9 +43,10 @@ void MainWindow::on_enableDriverPushButton_clicked()
         isEnable = true;
     }
     // 向下位机请求数据
-//    can1->setJointEnable(jointBeingUsed,isEnable);
     jointBeingUsed->setEnable(isEnable);
-    cout << "MainWindow::on_ENonPPushButton_clicked(): isEnable = " << isEnable << endl;
+    qDebug() << "on_enableDriverPushButton_clicked(): "
+             << "isEnable = "
+             << isEnable;
     // 重新更新状态，确认反转状态
     updateEnableDriver();
 }
@@ -45,21 +54,26 @@ void MainWindow::on_enableDriverPushButton_clicked()
 void MainWindow::updateEnableDriver()
 {
     enableDriverPushButtonOn = "background-color: rgb(";
-    enableDriverPushButtonOn += QString::number(ENonP_RGB_R) + ',' + QString::number(ENonP_RGB_G) + ',' + QString::number(ENonP_RGB_B) + ");";
+    enableDriverPushButtonOn += QString::number(ENonP_RGB_R) + ','
+            + QString::number(ENonP_RGB_G) + ','
+            + QString::number(ENonP_RGB_B) + ");";
     enableDriverPushButtonOff = tgPOSPushButtonOn;
-    can1->controller.SendMsg(jointBeingUsed->ID,CMDTYPE_RD,SYS_ENABLE_DRIVER,NULL,0x02);
+    can1->controller.SendMsg(jointBeingUsed->ID,
+                             CMDTYPE_RD,
+                             SYS_ENABLE_DRIVER,
+                             NULL,
+                             0x02);
     can1->controller.delayMs(2);
     uint16_t data_L = 0;
-    can1->controller.GetValueInTable(jointBeingUsed->ID, SYS_ENABLE_DRIVER, data_L);
-//    ui->enableDriverPushButton_2->setIconSize(QSize(ui->enableDriverPushButton_2->height(),
-//                                                    ui->enableDriverPushButton_2->height()));
+    can1->controller.GetValueInTable(jointBeingUsed->ID,
+                                     SYS_ENABLE_DRIVER,
+                                     data_L);
     if (data_L != 0) {
-        ui->enableDriverPushButton_2->setStyleSheet(enableDriverPushButtonOn); // 按的是enableDriverPushButton但改变颜色的是enableDriverPushButton_2
-//        ui->enableDriverPushButton_2->setIcon(QIcon(":/images/images/on.png"));
+        // 按的是enableDriverPushButton但改变颜色的是enableDriverPushButton_2
+        ui->enableDriverPushButton_2->setStyleSheet(enableDriverPushButtonOn);
         ui->enableDriverPushButton->setText("Enabled"); // 文字相应改变
     } else {
         ui->enableDriverPushButton_2->setStyleSheet(enableDriverPushButtonOff);
-//        ui->enableDriverPushButton_2->setIcon(QIcon(":/images/images/off.png"));
         ui->enableDriverPushButton->setText("Disabled"); // 文字相应改变
     }
 }
@@ -67,13 +81,23 @@ void MainWindow::updateEnableDriver()
 void MainWindow::updateIfError() {
     ifErrorPushButton_NoError = "background-color: rgb(";
     ifErrorPushButton_Error = "background-color: rgb(";
-    ifErrorPushButton_NoError += QString::number(ENonP_RGB_R) + ',' + QString::number(ENonP_RGB_G) + ',' + QString::number(ENonP_RGB_B) + ");";
-    ifErrorPushButton_Error = QString::number(TGPOS_RGB_R) + ',' + QString::number(TGPOS_RGB_G) + ',' + QString::number(TGPOS_RGB_B) + ");";
+    ifErrorPushButton_NoError += QString::number(ENonP_RGB_R) + ','
+            + QString::number(ENonP_RGB_G) + ','
+            + QString::number(ENonP_RGB_B) + ");";
+    ifErrorPushButton_Error = QString::number(TGPOS_RGB_R) + ','
+            + QString::number(TGPOS_RGB_G) + ','
+            + QString::number(TGPOS_RGB_B) + ");";
     // 读错误码
     uint16_t data_L = 0;
-    can1->controller.SendMsg(jointBeingUsed->ID,CMDTYPE_RD,SYS_ERROR,NULL,0x02);
+    can1->controller.SendMsg(jointBeingUsed->ID,
+                             CMDTYPE_RD,
+                             SYS_ERROR,
+                             NULL,
+                             0x02);
     can1->controller.delayMs(2);
-    can1->controller.GetValueInTable(jointBeingUsed->ID, SYS_ERROR, data_L);
+    can1->controller.GetValueInTable(jointBeingUsed->ID,
+                                     SYS_ERROR,
+                                     data_L);
     if (data_L != 0) {
         ui->ifErrorPushButton->setStyleSheet(ifErrorPushButton_Error);
     } else {
@@ -83,7 +107,9 @@ void MainWindow::updateIfError() {
 
 void MainWindow::updateConnected() {
     QString connected = "background-color: rgb(";
-    connected += QString::number(ENonP_RGB_R) + ',' + QString::number(ENonP_RGB_G) + ',' + QString::number(ENonP_RGB_B) + ");";
+    connected += QString::number(ENonP_RGB_R) + ','
+            + QString::number(ENonP_RGB_G) + ','
+            + QString::number(ENonP_RGB_B) + ");";
     ui->connectedPushButton->setStyleSheet(connected);
 }
 
@@ -111,33 +137,38 @@ void MainWindow::updatecmbID()
     qDebug() << "clear done";
     // 先把ID存出来，排序
     vector<uint32_t> vectID;
-    for (vector<Joint>::iterator iter = can1->controller.allJoint.begin(); iter != can1->controller.allJoint.end(); ++iter) {
+    for (vector<Joint>::iterator iter = can1->controller.allJoint.begin();
+         iter != can1->controller.allJoint.end();
+         ++iter) {
         vectID.push_back(iter.base()->ID);
     }
     sort(vectID.begin(), vectID.end());
     // 再把排序好的ID添加到combox
-    for (vector<uint32_t>::iterator iter = vectID.begin(); iter != vectID.end(); ++iter) {
+    for (vector<uint32_t>::iterator iter = vectID.begin();
+         iter != vectID.end();
+         ++iter) {
         ui->cmbID->addItem(QString::number(*iter, 10));
     }
     // combox添加好后
     if (can1->controller.allJoint.size() == 0) {
-//        qDebug("The joint is not connected.\n");
         QMessageBox::warning(this,"警告","未检测到模块！");
+        OscilloScope(); // 为了界面好看一点
 //        exit(0); //临时的处理方式
     } else {
-        // 触发cmbID的index改变的槽函数
-        ui->cmbID->setCurrentIndex(can1->controller.allJoint.size() - 1); // 获取末尾ID，方便调试，index从0开始，size从1开始
+        // 触发cmbID的index改变的槽函数。获取末尾ID，方便调试，index从0开始，size从1开始
+        ui->cmbID->setCurrentIndex(can1->controller.allJoint.size() - 1);
     }
 }
 
 void MainWindow::on_cmbID_currentIndexChanged(const QString &arg1)
 {
-    jointBeingUsed = can1->findJointID(arg1.toInt()); // jointBeingUsed = ui->cmbID->currentText().toInt(); // 修改当前控制的模块ID
-//    cout << jointBeingUsed << endl; // 若ID为空，jointBeingUsed也是空
+    jointBeingUsed = can1->findJointID(arg1.toInt()); // 修改当前控制的模块ID
     if (jointBeingUsed == NULL) {
         return;
     }
-    qDebug() << "in on_cmbID_currentIndexChanged(), ID: " << jointBeingUsed->ID;
+    qDebug() << "on_cmbID_currentIndexChanged(): "
+             << "ID = "
+             << jointBeingUsed->ID;
 
     moveInitialize();
 
@@ -163,7 +194,6 @@ void MainWindow::on_cmbID_currentIndexChanged(const QString &arg1)
     uint16_t data_L = 0;
     can1->controller.GetValueInTable(jointBeingUsed->ID, SYS_MODEL_TYPE,data_L);
     modelTypeBeingUsed = data_L;
-//    cout << "modelTypeBeingUsed: " << modelTypeBeingUsed << endl;
     QString tmp;
     switch (modelTypeBeingUsed)
     {
@@ -223,7 +253,6 @@ void MainWindow::slotTimeBottomDone()
 void MainWindow::on_btnSave_clicked()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("保存PID数据"), "./PID.dat", tr("PID数据文件(*.dat)"));
-//    qDebug() << fileName << endl;
     if (fileName == "")
         return;
     QFile file(fileName);
@@ -231,7 +260,6 @@ void MainWindow::on_btnSave_clicked()
         qDebug() << file.errorString();
     int oldIndex = ui->adjustGroupComboBox->currentIndex();
     ui->adjustGroupComboBox->setCurrentIndex(0);
-//    on_adjustGroupComboBox_currentIndexChanged(0);
     QString data = ui->POS_PSpinBox->text() + tr("\n")
                  + ui->POS_ISpinBox->text() + tr("\n")
                  + ui->POS_DSpinBox->text() + tr("\n")
@@ -244,7 +272,6 @@ void MainWindow::on_btnSave_clicked()
                  + ui->CUR_ISpinBox->text() + tr("\n")
                  + ui->CUR_DSpinBox->text() + tr("\n"); // 第1组完成，需要切换组别
     ui->adjustGroupComboBox->setCurrentIndex(1);
-//    on_adjustGroupComboBox_currentIndexChanged(1);
     data += ui->POS_PSpinBox->text() + tr("\n")
                  + ui->POS_ISpinBox->text() + tr("\n")
                  + ui->POS_DSpinBox->text() + tr("\n")
@@ -257,7 +284,6 @@ void MainWindow::on_btnSave_clicked()
                  + ui->CUR_ISpinBox->text() + tr("\n")
                  + ui->CUR_DSpinBox->text() + tr("\n"); // 第2组完成，需要切换组别
     ui->adjustGroupComboBox->setCurrentIndex(2);
-//    on_adjustGroupComboBox_currentIndexChanged(2);
     data += ui->POS_PSpinBox->text() + tr("\n")
                  + ui->POS_ISpinBox->text() + tr("\n")
                  + ui->POS_DSpinBox->text() + tr("\n")
@@ -270,12 +296,10 @@ void MainWindow::on_btnSave_clicked()
                  + ui->CUR_ISpinBox->text() + tr("\n")
                  + ui->CUR_DSpinBox->text(); // 第3组完成，需要切换回组别
     ui->adjustGroupComboBox->setCurrentIndex(oldIndex);
-//    on_adjustGroupComboBox_currentIndexChanged(oldIndex);
     QByteArray ba = data.toLatin1();
     file.write(ba);
     file.close();
     QMessageBox::information(this,"提示","PID数值已保存。");
-
 }
 
 void MainWindow::on_btnLoad_clicked()
@@ -466,11 +490,8 @@ void MainWindow::on_btnLoad_clicked()
                 break;
             }
         }
-
-//        qDebug() << line;
         ++count;
     }
-//    qDebug() << QObject::tr("文件内容：") << endl << file.readAll();
     file.close();
 
     ui->adjustGroupComboBox->setCurrentIndex(oldIndex); // 切换回组别
