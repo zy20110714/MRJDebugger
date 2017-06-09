@@ -372,13 +372,6 @@ void MainWindow::slotTimeOscilloScopeDone()
                     can1->controller.GetValueInTable(jointBeingUsed->ID, paintArea->showItems[i].Item, data_L);
                     can1->controller.GetValueInTable(jointBeingUsed->ID, paintArea->showItems[i].Item + 1, data_H);
                     double temp = data_L + (data_H * 65536);
-//                            cout << "temp:" << temp
-//                                 << "L:" << data_L
-//                                 << "H:" << data_H << endl;
-
-        //                    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
-        //                    temp = qrand()%10;
-        //                    cout << temp << endl;
 
                     switch (paintArea->showItems[i].Item) {
                     case SCP_TAGCUR_L://(showItems[0].Item)://TAG_CURRENT_L:
@@ -404,9 +397,6 @@ void MainWindow::slotTimeOscilloScopeDone()
 //                        temp = data_L; // 位置要去掉圈数，只显示绝对编码器的数值 2017-3-28
                         break;
                     }
-//                    cout << "temp:" << temp
-//                         << "L:" << data_L
-//                         << "H:" << data_H << endl;
 
                     //向队尾追加值
                     paintArea->showItems[i].sq.Append(temp);

@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
         // 不能捕获CAN API输出的信息
         QMessageBox::warning(this,"警告","CAN初始化失败！");
         // 临时的处理方法，直接退出程序
-        exit(0);
+//        exit(0);
     }
 
     // 启动ui界面

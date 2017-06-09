@@ -26,7 +26,8 @@ void MainWindow::Set()
     } else {
         ui->ENonPPushButton->setStyleSheet(ENonPPushButtonOff);
     }
-
+    // 把设ID的输入框填上当前的ID 北科小伙点set ID的事故
+    ui->IDLineEdit->setText(QString::number(jointBeingUsed->ID));
 }
 
 void MainWindow::on_IDPushButton_clicked()
