@@ -41,7 +41,7 @@ void MainWindow::PID()
     can1->controller.GetValueInTable(jointBeingUsed->ID, LIT_MAX_CURRENT,data_L);
     ui->maxCurLineEdit->setText(QString::number(data_L, 10));
     can1->controller.GetValueInTable(jointBeingUsed->ID, LIT_MAX_SPEED,data_L);
-    ui->maxSpdLineEdit->setText(QString::number(data_L, 10));
+    ui->maxSpdLineEdit->setText(QString::number(data_L/100, 10));
     can1->controller.GetValueInTable(jointBeingUsed->ID, LIT_MAX_ACC,data_L);
     ui->maxAccLineEdit->setText(QString::number(data_L, 10));
     can1->controller.GetValueInTable(jointBeingUsed->ID, LIT_MIN_POSITION_L,data_L);
@@ -57,6 +57,10 @@ void MainWindow::PID()
 
 void MainWindow::showSEVPID()
 {
+    if (jointBeingUsed == NULL) {
+        return;
+    }
+
     uint16_t data_L = 0;
 
     can1->controller.GetValueInTable(jointBeingUsed->ID, SEV_POSITION_P,data_L);
@@ -87,6 +91,9 @@ void MainWindow::showSEVPID()
 
 void MainWindow::showMPID()
 {
+    if (jointBeingUsed == NULL) {
+        return;
+    }
     uint16_t data_L = 0;
 
     can1->controller.GetValueInTable(jointBeingUsed->ID, M_POSITION_P,data_L);
@@ -117,6 +124,9 @@ void MainWindow::showMPID()
 
 void MainWindow::showLPID()
 {
+    if (jointBeingUsed == NULL) {
+        return;
+    }
     uint16_t data_L = 0;
 
     can1->controller.GetValueInTable(jointBeingUsed->ID, L_POSITION_P,data_L);
@@ -162,6 +172,9 @@ void MainWindow::on_adjustGroupComboBox_currentIndexChanged(int index)
 
 void MainWindow::setNewPID(int value,int index)
 {
+    if (jointBeingUsed == NULL) {
+        return;
+    }
     // 向下位机请求数据
     uint8_t data[2] = {0,0};
     data[1] = (uint8_t)( (value & 0xff00) >> 8 );
@@ -192,11 +205,10 @@ void MainWindow::on_POS_PSpinBox_editingFinished()
 
     uint16_t data_L = 0;
 
-    can1->controller.GetValueInTable(jointBeingUsed->ID, index,data_L);
-    cout << data_L << endl;
+    if (jointBeingUsed != NULL) {
+        can1->controller.GetValueInTable(jointBeingUsed->ID, index,data_L);
+    }
     ui->POS_PSpinBox->setValue(data_L);
-    cout << ui->POS_PSpinBox->value() << endl;
-
 }
 
 void MainWindow::on_POS_ISpinBox_editingFinished()
@@ -218,9 +230,10 @@ void MainWindow::on_POS_ISpinBox_editingFinished()
 
     uint16_t data_L = 0;
 
-    can1->controller.GetValueInTable(jointBeingUsed->ID, index,data_L);
+    if (jointBeingUsed != NULL) {
+        can1->controller.GetValueInTable(jointBeingUsed->ID, index,data_L);
+    }
     ui->POS_ISpinBox->setValue(data_L);
-
 }
 
 void MainWindow::on_POS_DSpinBox_editingFinished()
@@ -242,7 +255,9 @@ void MainWindow::on_POS_DSpinBox_editingFinished()
 
     uint16_t data_L = 0;
 
-    can1->controller.GetValueInTable(jointBeingUsed->ID, index,data_L);
+    if (jointBeingUsed != NULL) {
+        can1->controller.GetValueInTable(jointBeingUsed->ID, index,data_L);
+    }
     ui->POS_DSpinBox->setValue(data_L);
 
 }
@@ -266,7 +281,9 @@ void MainWindow::on_POS_DSSpinBox_editingFinished()
 
     uint16_t data_L = 0;
 
-    can1->controller.GetValueInTable(jointBeingUsed->ID, index,data_L);
+    if (jointBeingUsed != NULL) {
+        can1->controller.GetValueInTable(jointBeingUsed->ID, index,data_L);
+    }
     ui->POS_DSSpinBox->setValue(data_L);
 
 }
@@ -290,7 +307,9 @@ void MainWindow::on_SPD_PSpinBox_editingFinished()
 
     uint16_t data_L = 0;
 
-    can1->controller.GetValueInTable(jointBeingUsed->ID, index,data_L);
+    if (jointBeingUsed != NULL) {
+        can1->controller.GetValueInTable(jointBeingUsed->ID, index,data_L);
+    }
     ui->SPD_PSpinBox->setValue(data_L);
 
 }
@@ -314,7 +333,9 @@ void MainWindow::on_SPD_ISpinBox_editingFinished()
 
     uint16_t data_L = 0;
 
-    can1->controller.GetValueInTable(jointBeingUsed->ID, index,data_L);
+    if (jointBeingUsed != NULL) {
+        can1->controller.GetValueInTable(jointBeingUsed->ID, index,data_L);
+    }
     ui->SPD_ISpinBox->setValue(data_L);
 
 }
@@ -338,7 +359,9 @@ void MainWindow::on_SPD_DSpinBox_editingFinished()
 
     uint16_t data_L = 0;
 
-    can1->controller.GetValueInTable(jointBeingUsed->ID, index,data_L);
+    if (jointBeingUsed != NULL) {
+        can1->controller.GetValueInTable(jointBeingUsed->ID, index,data_L);
+    }
     ui->SPD_DSpinBox->setValue(data_L);
 
 }
@@ -362,7 +385,9 @@ void MainWindow::on_SPD_DSSpinBox_editingFinished()
 
     uint16_t data_L = 0;
 
-    can1->controller.GetValueInTable(jointBeingUsed->ID, index,data_L);
+    if (jointBeingUsed != NULL) {
+        can1->controller.GetValueInTable(jointBeingUsed->ID, index,data_L);
+    }
     ui->SPD_DSSpinBox->setValue(data_L);
 
 }
@@ -386,7 +411,9 @@ void MainWindow::on_CUR_PSpinBox_editingFinished()
 
     uint16_t data_L = 0;
 
-    can1->controller.GetValueInTable(jointBeingUsed->ID, index,data_L);
+    if (jointBeingUsed != NULL) {
+        can1->controller.GetValueInTable(jointBeingUsed->ID, index,data_L);
+    }
     ui->CUR_PSpinBox->setValue(data_L);
 
 }
@@ -410,7 +437,9 @@ void MainWindow::on_CUR_ISpinBox_editingFinished()
 
     uint16_t data_L = 0;
 
-    can1->controller.GetValueInTable(jointBeingUsed->ID, index,data_L);
+    if (jointBeingUsed != NULL) {
+        can1->controller.GetValueInTable(jointBeingUsed->ID, index,data_L);
+    }
     ui->CUR_ISpinBox->setValue(data_L);
 
 }
@@ -434,7 +463,9 @@ void MainWindow::on_CUR_DSpinBox_editingFinished()
 
     uint16_t data_L = 0;
 
-    can1->controller.GetValueInTable(jointBeingUsed->ID, index,data_L);
+    if (jointBeingUsed != NULL) {
+        can1->controller.GetValueInTable(jointBeingUsed->ID, index,data_L);
+    }
     ui->CUR_DSpinBox->setValue(data_L);
 
 }
@@ -445,18 +476,22 @@ void MainWindow::on_maxCurLineEdit_editingFinished()
 
     uint16_t data_L = 0;
 
-    can1->controller.GetValueInTable(jointBeingUsed->ID, LIT_MAX_CURRENT,data_L);
+    if (jointBeingUsed != NULL) {
+        can1->controller.GetValueInTable(jointBeingUsed->ID, LIT_MAX_CURRENT,data_L);
+    }
     ui->maxCurLineEdit->setText(QString::number(data_L, 10));
 }
 
 void MainWindow::on_maxSpdLineEdit_editingFinished()
 {
-    setNewPID(ui->maxSpdLineEdit->text().toInt(),LIT_MAX_SPEED);
+    setNewPID(ui->maxSpdLineEdit->text().toInt()*100,LIT_MAX_SPEED);
 
     uint16_t data_L = 0;
 
-    can1->controller.GetValueInTable(jointBeingUsed->ID, LIT_MAX_SPEED,data_L);
-    ui->maxSpdLineEdit->setText(QString::number(data_L, 10));
+    if (jointBeingUsed != NULL) {
+        can1->controller.GetValueInTable(jointBeingUsed->ID, LIT_MAX_SPEED,data_L);
+    }
+    ui->maxSpdLineEdit->setText(QString::number(data_L/100, 10));
 }
 
 void MainWindow::on_maxAccLineEdit_editingFinished()
@@ -465,7 +500,9 @@ void MainWindow::on_maxAccLineEdit_editingFinished()
 
     uint16_t data_L = 0;
 
-    can1->controller.GetValueInTable(jointBeingUsed->ID, LIT_MAX_ACC,data_L);
+    if (jointBeingUsed != NULL) {
+        can1->controller.GetValueInTable(jointBeingUsed->ID, LIT_MAX_ACC,data_L);
+    }
     ui->maxAccLineEdit->setText(QString::number(data_L, 10));
 }
 
@@ -475,7 +512,9 @@ void MainWindow::on_minPosLLineEdit_editingFinished()
 
     uint16_t data_L = 0;
 
-    can1->controller.GetValueInTable(jointBeingUsed->ID, LIT_MIN_POSITION_L,data_L);
+    if (jointBeingUsed != NULL) {
+        can1->controller.GetValueInTable(jointBeingUsed->ID, LIT_MIN_POSITION_L,data_L);
+    }
     ui->minPosLLineEdit->setText(QString::number(data_L, 10));
 }
 
@@ -485,7 +524,9 @@ void MainWindow::on_maxPosLLineEdit_editingFinished()
 
     uint16_t data_L = 0;
 
-    can1->controller.GetValueInTable(jointBeingUsed->ID, LIT_MAX_POSITION_L,data_L);
+    if (jointBeingUsed != NULL) {
+        can1->controller.GetValueInTable(jointBeingUsed->ID, LIT_MAX_POSITION_L,data_L);
+    }
     ui->maxPosLLineEdit->setText(QString::number(data_L, 10));
 }
 
@@ -495,7 +536,9 @@ void MainWindow::on_minPosHLineEdit_editingFinished()
 
     uint16_t data_L = 0;
 
-    can1->controller.GetValueInTable(jointBeingUsed->ID, LIT_MIN_POSITION_H,data_L);
+    if (jointBeingUsed != NULL) {
+        can1->controller.GetValueInTable(jointBeingUsed->ID, LIT_MIN_POSITION_H,data_L);
+    }
     ui->minPosHLineEdit->setText(QString::number(data_L, 10));
 }
 
@@ -505,6 +548,8 @@ void MainWindow::on_maxPosHLineEdit_editingFinished()
 
     uint16_t data_L = 0;
 
-    can1->controller.GetValueInTable(jointBeingUsed->ID, LIT_MAX_POSITION_H,data_L);
+    if (jointBeingUsed != NULL) {
+        can1->controller.GetValueInTable(jointBeingUsed->ID, LIT_MAX_POSITION_H,data_L);
+    }
     ui->maxPosHLineEdit->setText(QString::number(data_L, 10));
 }

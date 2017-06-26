@@ -12,11 +12,15 @@ void MainWindow::health()
         timerMonitor = new QTimer(this);
         connect(timerMonitor,SIGNAL(timeout()),this,SLOT(slotTimeMonitorDone()));
         timerMonitor->start(MONITOR_INTEVAL);
+        ui->updateButton->setVisible(false);
     } // 暂时持续性地更新数据 // 暂时不需要持续性地更新数据
 }
 
 void MainWindow::on_clearErrorButton_clicked()
 {
+    if (jointBeingUsed == NULL) {
+        return;
+    }
     jointBeingUsed->clearErrStatus();
     cout << "MainWindow::on_clearErrorButton_clicked(): done."<< endl;
 }
@@ -28,7 +32,6 @@ void MainWindow::on_updateButton_clicked()
 
 void MainWindow::slotTimeMonitorDone()
 {
-//    updateEnableDriver(); // 不属于health部分
     if (jointBeingUsed == NULL) {
         return;
     }

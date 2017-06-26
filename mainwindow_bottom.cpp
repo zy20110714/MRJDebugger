@@ -15,15 +15,11 @@ using std::cout;
 using std::endl;
 using std::sort;
 
-void MainWindow::on_enableDriverPushButton_toggled(bool checked)
-{
-    qDebug() << "on_enableDriverPushButton_toggled(): "
-             << "checked = "
-             << checked;
-}
-
 void MainWindow::on_enableDriverPushButton_clicked()
 {
+    if (jointBeingUsed == NULL) {
+        return;
+    }
     // 先更新当前的状态
     can1->controller.SendMsg(jointBeingUsed->ID,
                              CMDTYPE_RD,
@@ -115,6 +111,9 @@ void MainWindow::updateConnected() {
 
 void MainWindow::on_btnFlash_clicked()
 {
+    if (jointBeingUsed == NULL) {
+        return;
+    }
     bool isSuccess = false;
     isSuccess = jointBeingUsed->setSaveToFlash();
     if (isSuccess) {
@@ -126,15 +125,23 @@ void MainWindow::on_btnFlash_clicked()
 
 void MainWindow::on_btnUpdateID_clicked()
 {
-    can1->controller.updateAllID();
-    updatecmbID();
+    if ( !isCANInitialSucceed ) { ///<还没有初始化成功
+        if( !can1->Init("pcan0") ) {
+            QMessageBox::warning(this,"警告","CAN初始化失败！"); ///<不能捕获CAN API输出的信息
+            isCANInitialSucceed = false;
+        } else {
+            isCANInitialSucceed = true;
+        }
+    } else { ///<已经初始化成功
+        can1->controller.updateAllID();
+    }
+    updatecmbID(); ///<从JointThread读已有的ID，添加到ui的cmbID控件上
 }
 
 void MainWindow::updatecmbID()
 {
     // Fill the items of combo box
     ui->cmbID->clear(); // 清空之后才能正确添加
-    qDebug() << "clear done";
     // 先把ID存出来，排序
     vector<uint32_t> vectID;
     for (vector<Joint>::iterator iter = can1->controller.allJoint.begin();
@@ -151,9 +158,12 @@ void MainWindow::updatecmbID()
     }
     // combox添加好后
     if (can1->controller.allJoint.size() == 0) {
-        QMessageBox::warning(this,"警告","未检测到模块！");
-        OscilloScope(); // 为了界面好看一点
-//        exit(0); //临时的处理方式
+        if (isCANInitialSucceed) { ///<初始化都没成功，就不用再警告了
+            QMessageBox::warning(this,"警告","未检测到模块！");
+        }
+        OscilloScope(); ///<为了界面好看一点
+        health();       ///<为了界面好看一点
+        moveInitialize();
     } else {
         // 触发cmbID的index改变的槽函数。获取末尾ID，方便调试，index从0开始，size从1开始
         ui->cmbID->setCurrentIndex(can1->controller.allJoint.size() - 1);
@@ -200,7 +210,8 @@ void MainWindow::on_cmbID_currentIndexChanged(const QString &arg1)
         case 16: tmp = "M14"; break;
         case 17: tmp = "M14E"; break;
         case 2:
-        case 32: tmp = "M17"; modelTypeBeingUsed = 2; break; // CANAPI .h里只定义了2的情况，没有定义32的情况
+//        case 32: tmp = "M17"; modelTypeBeingUsed = 2; break; // CANAPI .h里只定义了2的情况，没有定义32的情况
+        case 32: tmp = "M17"; modelTypeBeingUsed = 32; break; // CANAPI .h里只定义了32的情况，没有定义2的情况
         case 33: tmp = "M17E"; break;
         case 48: tmp = "M20"; break;
         case 64: tmp = "LIFT"; break;

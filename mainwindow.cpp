@@ -16,11 +16,13 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     can1(new UserControlOnCan),     // 调用API开启CAN线上的线程
+    MC(NULL),
     ui(new Ui::MainWindow),
     jointBeingUsed(NULL),
+    isCANInitialSucceed(false),
     timerMove(NULL),
-    paintArea(NULL),
-    timerOscilloScope(NULL),        // 并没有使用
+    osthread(NULL),
+    timerOscilloScope(NULL),
     curveTgPOS(NULL),
     curveTgSPD(NULL),
     curveTgCUR(NULL),
@@ -32,20 +34,8 @@ MainWindow::MainWindow(QWidget *parent) :
     timerMonitor(NULL),             // 监视器用的定时器
     timerBottom(NULL)
 {
-    if( !can1->Init("pcan0") ) {
-        // 不能捕获CAN API输出的信息
-        QMessageBox::warning(this,"警告","CAN初始化失败！");
-        // 临时的处理方法，直接退出程序
-//        exit(0);
-    }
-
-    // 启动ui界面
-    ui->setupUi(this);
-    // 开启新线程准备显示示波器曲线
-    OscilloScopeThread osthread(this);
-    osthread.start();
-    // 从JointThread读已有的ID，添加到ui的cmbID控件上
-    updatecmbID();
+    ui->setupUi(this);  ///<启动ui界面
+    on_btnUpdateID_clicked();
 }
 
 MainWindow::~MainWindow()
@@ -211,7 +201,7 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 {
     // 按住ctrl、shift、alt和F7，则进入命令发送高级模式
     if (e->modifiers() == (Qt::ShiftModifier | Qt::ControlModifier | Qt::AltModifier) && e->key() == Qt::Key_F7) {
-            advControlForm = new AdvancedControl(this, can1);
-            advControlForm->show();
+        advControlForm = new AdvancedControl(this, can1);
+        advControlForm->show();
     }
 }

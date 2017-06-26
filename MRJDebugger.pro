@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     mainwindow_health.cpp \
     mainwindow_bottom.cpp \
     advancedcontrol.cpp \
-    oscilloscopethread.cpp
+    oscilloscopethread.cpp \
+    motioncontrol.cpp
 
 HEADERS  += mainwindow.h \
     connectform.h \
@@ -32,7 +33,8 @@ HEADERS  += mainwindow.h \
     Component/showitem.h \
     Component/showqueue.h \
     advancedcontrol.h \
-    oscilloscopethread.h
+    oscilloscopethread.h \
+    motioncontrol.h
 
 FORMS    += mainwindow.ui \
     connectform.ui \
@@ -54,5 +56,5 @@ RESOURCES += \
     image.qrc
 RC_FILE = MRJDebugger.rc
 
-#DISTFILES += \
-#    MRJDebugger.rc
+DISTFILES += \
+    MRJDebugger.rc

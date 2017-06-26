@@ -21,6 +21,7 @@
 #include <qwt_plot_magnifier.h>
 #include <qwt_plot_panner.h>
 #include "oscilloscopethread.h"
+#include "motioncontrol.h"
 
 #define MOTION_CONTROL_INTEVAL 30   // 运动控制周期（ms）
 #define OSCILLO_SCOPE_INTEVAL 10    // 示波器采样周期（ms）
@@ -49,7 +50,7 @@ public:
     // CANAPI
     UserControlOnCan * can1;
     // Osilloscope
-    void slotTimeOscilloScopeDone();
+    MotionControl * MC;
 
 private slots:
     // move
@@ -61,7 +62,6 @@ private slots:
     void on_confirmButton_clicked();
     void slotTimeMoveDone();
     // Osilloscope
-    void slotTimeMonitorDone();
     void on_stopButton_clicked();
     void on_waveModeCombo_currentIndexChanged(int index);
     void on_frequencyLineEdit_editingFinished();
@@ -82,6 +82,8 @@ private slots:
     void on_ScanFrequencyComboBox_currentIndexChanged(int index);
     void on_adjustGroupComboBox_currentIndexChanged(int index);
     void updatePlot();
+    // health
+    void slotTimeMonitorDone();
     // PID
     void on_POS_PSpinBox_editingFinished();
     void on_POS_ISpinBox_editingFinished();
@@ -116,12 +118,12 @@ private slots:
     void on_btnSave_clicked();
     void on_btnLoad_clicked();
     void on_cmbID_currentIndexChanged(const QString &arg1);
-    void on_enableDriverPushButton_toggled(bool checked);
 
-private:
+public:
     Ui::MainWindow *ui;                 // 主要界面
     AdvancedControl *advControlForm;    // 另一界面
-    Joint * jointBeingUsed;             // 标记当前选中的关节
+    Joint* jointBeingUsed;             // 标记当前选中的关节
+    bool isCANInitialSucceed;
     // move
     QTimer* timerMove;
     bool EnableRun;
@@ -136,8 +138,8 @@ private:
     void txtBiasChangemanualSlider();
     void moveInitialize();
     // Osilloscope
-    PaintArea* paintArea;
-    QTimer* timerOscilloScope;
+    OscilloScopeThread *osthread;
+    QTimer *timerOscilloScope;
     QString tgPOSPushButtonOn;
     QString tgPOSPushButtonOff;
     QString tgSPDPushButtonOn;
@@ -154,8 +156,7 @@ private:
     QString scopeEnablePushButtonOff;
     void SetValue(double value);
     void OscilloScope();
-    void setMask();
-    static unsigned __stdcall oscilloScopeThreadStaticEntryPoint(void* arg);
+//    void setMask();
     QwtPlotCurve *curveTgPOS;
     QwtPlotCurve *curveTgSPD;
     QwtPlotCurve *curveTgCUR;

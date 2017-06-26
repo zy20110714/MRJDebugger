@@ -26,7 +26,7 @@
 #define MODEL_TYPE_M14E     0x011
 #define MODEL_TYPE_LIFT     0x040
 #define MODEL_TYPE_M14      0x010
-#define MODEL_TYPE_M17      0x002
+#define MODEL_TYPE_M17      0x020
 #define MODEL_TYPE_M17E     0x021
 #define MODEL_TYPE_M20      0x030
 

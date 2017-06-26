@@ -25,23 +25,30 @@ void MainWindow::moveInitialize()
     EnableRun = false;
     ui->confirmButton->setText("Click to run"); // 此外还有一处设置了setText
     // 首次启动则定义运动控制定时器
-    if (timerMove != NULL) {
-        ;
-    } else {
+    if (timerMove == NULL) {
         timerMove = new QTimer(this);
         connect(timerMove,SIGNAL(timeout()),this,SLOT(slotTimeMoveDone()));
-        timerMove->start(MOTION_CONTROL_INTEVAL);
+//        timerMove->start(MOTION_CONTROL_INTEVAL); // 先不启动
     }
-    if (jointBeingUsed != NULL) {
-        // 由当前工作模式更新控制板块中的ComboBox
-        int workMode = jointBeingUsed->getWorkMode();
-        ui->cmbWorkMode->setCurrentIndex(workMode); // 会触发，也可能不会触发on_cmbWorkMode_currentIndexChanged()
-        // 防止没有调用on_cmbWorkMode_currentIndexChanged()，强制运行下列2个函数
-        // 工作模式更新bias
-        workModeUpdatetxtBias();
-        // bias更新滑块
-        txtBiasChangemanualSlider();
+    // 使用10ms手动位置运动控制器
+    if (this->MC == NULL) {
+        this->MC = new MotionControl(jointBeingUsed, this);
+    } else {
+        delete this->MC;
+        MC = new MotionControl(jointBeingUsed, this);
     }
+    if (jointBeingUsed == NULL) {
+        return;
+    }
+    // 由当前工作模式更新控制板块中的ComboBox
+    int workMode = jointBeingUsed->getWorkMode();
+    ui->cmbWorkMode->setCurrentIndex(workMode); // 会触发，也可能不会触发on_cmbWorkMode_currentIndexChanged()
+    // 防止没有调用on_cmbWorkMode_currentIndexChanged()，强制运行下列2个函数
+    // 工作模式更新bias
+    workModeUpdatetxtBias();
+    // bias更新滑块
+    txtBiasChangemanualSlider();
+
 }
 
 void MainWindow::on_txtBias_editingFinished()
@@ -58,11 +65,21 @@ void MainWindow::on_txtBias_editingFinished()
     }
     bias = ui->txtBias->text().toDouble();
     txtBiasChangemanualSlider();
+    if (ui->cmbWorkMode->currentIndex() == MODE_POSITION
+            && ui->waveModeCombo->currentIndex() == MODE_MANUAL) {
+        // 改成用10ms控制器控制的方式
+        float angle = (float)(bias / 180.0 * M_PI);
+        MC->SetTag(angle);
+    }
 }
 
 void MainWindow::on_cmbWorkMode_currentIndexChanged(int index)
 {
-    qDebug() << "in on_cmbWorkMode_currentIndexChanged";
+    if (jointBeingUsed == NULL) {
+        return;
+    }
+
+//    qDebug() << "in on_cmbWorkMode_currentIndexChanged";
     int workMode = index;
 
     jointBeingUsed->setWorkMode(workMode);
@@ -78,6 +95,9 @@ void MainWindow::on_cmbWorkMode_currentIndexChanged(int index)
 
 void MainWindow::workModeUpdatetxtBias()
 {
+    if (jointBeingUsed == NULL) {
+        return;
+    }
     int workMode = ui->cmbWorkMode->currentIndex();
 
     switch(workMode) // 工作模式修改后，修改txtBias
@@ -172,18 +192,38 @@ void MainWindow::on_manualSlider_valueChanged(int value)
 
 void MainWindow::on_confirmButton_clicked()
 {
+    if (jointBeingUsed == NULL) {
+//        float angle = (float)(100 / 180.0 * M_PI);
+//    //        qDebug() << "angle: " << angle;
+//        MC->SetTag(angle);
+        return;
+    }
     EnableRun = true;
     ui->confirmButton->setText("Running");
     ui->confirmButton->setStyleSheet(confirmButtonOn);
     ui->stopButton->setStyleSheet(stopButtonOff);
+
+    if (ui->cmbWorkMode->currentIndex() == MODE_POSITION
+            && ui->waveModeCombo->currentIndex() == MODE_MANUAL) {
+        // 改成用10ms控制器控制的方式
+        float angle = (float)(bias / 180.0 * M_PI);
+        MC->SetTag(angle);
+    } else {
+        slotTimeMoveDone();
+        timerMove->start(MOTION_CONTROL_INTEVAL);
+    }
 }
 
 void MainWindow::on_stopButton_clicked()
 {
+    if (jointBeingUsed == NULL) {
+        return;
+    }
     EnableRun = false;
     ui->stopButton->setStyleSheet(stopButtonOn);
     ui->confirmButton->setText("Click to run");
     ui->confirmButton->setStyleSheet(confirmButtonOff);
+    timerMove->stop(); // 关闭定时器
     int workMode = ui->cmbWorkMode->currentIndex();
     switch(workMode) // Different WorkMode Different Stop way
     {
@@ -210,11 +250,17 @@ void MainWindow::on_stopButton_clicked()
         // If read the current position first, then set the target position to the current position, that may be too slow.
         // So use another method: switch the WorkMode to speed then set the speed to 0, then switch back. The hardware could ensure to update the target location.
         // 但实际使用时，各关节都处于0位，2关节和4关节受到重力影响，这样的停止方式会发生运动，而且不停地按stop会持续性地运动
-
         jointBeingUsed->updateCurPos();
         can1->controller.delayMs(5);
-        float currentPos = jointBeingUsed->getCurPos(JOINT_ANGLE);
-        jointBeingUsed->setTagPos(currentPos, JOINT_ANGLE);
+        if (ui->waveModeCombo->currentIndex() == MODE_MANUAL) {
+//            // 改成用10ms控制器控制的方式
+//            float currentPos = jointBeingUsed->getCurPos(JOINT_RADIAN);
+//            MC->SetTag(currentPos);
+        } else {
+            float currentPos = jointBeingUsed->getCurPos(JOINT_ANGLE);
+//        jointBeingUsed->setTagPos(currentPos, JOINT_ANGLE);
+            this->SetValue(currentPos);
+        }
         break;
     }
     default: break;
@@ -241,63 +287,64 @@ void MainWindow::slotTimeMoveDone()
         //根据所选波形进入相应控制步骤
         switch (ui->waveModeCombo->currentIndex())
         {
-        case MODE_MANUAL: {
-            s_iCount = 0;
-            SetValue(bias);
-            break;
-        }
-        case MODE_SQUARE: { // 方波时根据选定频率发送，经过半个周期变换一次方向，所以是乘500
-            static bool s_bHigh = false;
-            double time = s_iCount * MOTION_CONTROL_INTEVAL;
-            if (time >= 500.0 / frequency) {
+            case MODE_MANUAL: {
+//                qDebug() << "in slotTimeMoveDone()";
                 s_iCount = 0;
-                s_bHigh = !s_bHigh;
-                SetValue((int)(amplitude * (s_bHigh ? 1 : -1) + bias));
+                SetValue(bias);
+                break;
             }
-            break;
-        }
-        case MODE_TRIANGLE: {//三角波时 TriangleInterval 个 Interval 发送一次
-            const unsigned int TriangleInterval = 1;
-            if (s_iCount >= TriangleInterval) {
-                s_iCount = 0;
-                //得到三角波的周期（s）
-                double T = 1.0 / frequency;
-                //校准指令发送的间隔时间
-                s_iCountforwave++;
-                //获得发送指令时真正的时间（ms）
-                double time = s_iCountforwave * TriangleInterval * MOTION_CONTROL_INTEVAL;
-                //若当前时间超过一个周期，校准时间使得时间回到周期开始
-                if (time / 1000 >= T) {
-                    s_iCountforwave = 0;
+            case MODE_SQUARE: { // 方波时根据选定频率发送，经过半个周期变换一次方向，所以是乘500
+                static bool s_bHigh = false;
+                double time = s_iCount * MOTION_CONTROL_INTEVAL;
+                if (time >= 500.0 / frequency) {
+                    s_iCount = 0;
+                    s_bHigh = !s_bHigh;
+                    SetValue((int)(amplitude * (s_bHigh ? 1 : -1) + bias));
                 }
-                //由当前时间得到当前控制值
-                double tempf = time / 1000 * amplitude / T;
-                //发送控制值
-                SetValue(tempf + bias);
+                break;
             }
-            break;
-        }
-        case MODE_SINE: { // 正弦波时SineInterval 个Interval 发送一次
-            const unsigned int SineInterval = 1;
-            if (s_iCount >= SineInterval) {
-                s_iCount = 0;
-                //得到正弦波的周期（s）
-                double T = 1.0 / frequency;
-                //校准指令发送的间隔时间
-                s_iCountforwave++;
-                //获得发送指令时真正的时间（ms）
-                double time = s_iCountforwave * SineInterval * MOTION_CONTROL_INTEVAL;
-                //若当前时间超过一个周期，校准时间使得时间回到周期开始
-                if (time / 1000 >= T) {
-                    s_iCountforwave = 0;
+            case MODE_TRIANGLE: {//三角波时 TriangleInterval 个 Interval 发送一次
+                const unsigned int TriangleInterval = 1;
+                if (s_iCount >= TriangleInterval) {
+                    s_iCount = 0;
+                    //得到三角波的周期（s）
+                    double T = 1.0 / frequency;
+                    //校准指令发送的间隔时间
+                    s_iCountforwave++;
+                    //获得发送指令时真正的时间（ms）
+                    double time = s_iCountforwave * TriangleInterval * MOTION_CONTROL_INTEVAL;
+                    //若当前时间超过一个周期，校准时间使得时间回到周期开始
+                    if (time / 1000 >= T) {
+                        s_iCountforwave = 0;
+                    }
+                    //由当前时间得到当前控制值
+                    double tempf = time / 1000 * amplitude / T;
+                    //发送控制值
+                    SetValue(tempf + bias);
                 }
-                //由当前时间得到当前控制值
-                double tempf = sin(time / 1000 * frequency * 2 * PI) * amplitude;
-                //发送控制值
-                SetValue((short)(tempf + bias));
+                break;
             }
-            break;
-        }
+            case MODE_SINE: { // 正弦波时SineInterval 个Interval 发送一次
+                const unsigned int SineInterval = 1;
+                if (s_iCount >= SineInterval) {
+                    s_iCount = 0;
+                    //得到正弦波的周期（s）
+                    double T = 1.0 / frequency;
+                    //校准指令发送的间隔时间
+                    s_iCountforwave++;
+                    //获得发送指令时真正的时间（ms）
+                    double time = s_iCountforwave * SineInterval * MOTION_CONTROL_INTEVAL;
+                    //若当前时间超过一个周期，校准时间使得时间回到周期开始
+                    if (time / 1000 >= T) {
+                        s_iCountforwave = 0;
+                    }
+                    //由当前时间得到当前控制值
+                    double tempf = sin(time / 1000 * frequency * 2 * PI) * amplitude;
+                    //发送控制值
+                    SetValue((short)(tempf + bias));
+                }
+                break;
+            }
         }
     }
 }
